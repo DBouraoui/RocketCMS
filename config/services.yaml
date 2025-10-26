@@ -10,6 +10,6 @@ services:
 
     App\Twig\AppExtension:
         arguments:
-            $settingsRepository: '@App\Repository\SettingsRepository'
+            $cacheService: '@App\Service\CacheService'
         tags:
             - { name: 'twig.extension' }

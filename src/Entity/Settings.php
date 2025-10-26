@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\ThemesEnum;
 use App\Repository\SettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +38,9 @@ class Settings
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(enumType: ThemesEnum::class)]
+    private ?ThemesEnum $theme = null;
 
 
     #[ORM\PrePersist]
@@ -146,6 +150,18 @@ class Settings
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getTheme(): ?ThemesEnum
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(ThemesEnum $theme): static
+    {
+        $this->theme = $theme;
 
         return $this;
     }

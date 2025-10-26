@@ -1,0 +1,124 @@
+{% extends './Themes/Business/base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+        <div class="w-full max-w-md">
+            <!-- Card Container -->
+            <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden">
+                <!-- Header Section -->
+                <div class="bg-primary px-6 sm:px-8 py-8 sm:py-10">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-primary-content text-center">Bienvenue</h1>
+                    <p class="text-primary-content/80 text-center mt-2 text-sm sm:text-base">Connectez-vous à votre compte</p>
+                </div>
+
+                <!-- Form Section -->
+                <div class="px-6 sm:px-8 py-8 sm:py-10">
+                    {% if error %}
+                        <div class="alert alert-error mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="alert alert-info mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-sm">
+                            Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
+                            <a href="{{ path('app_logout') }}" class="link link-hover font-medium">Se déconnecter</a>
+                        </span>
+                        </div>
+                    {% endif %}
+
+                    <form method="post" class="space-y-5 sm:space-y-6">
+                        <!-- Email Field -->
+                        <div class="form-control w-full">
+                            <label for="username" class="label">
+                                <span class="label-text font-medium">Adresse email</span>
+                            </label>
+                            <input
+                                type="email"
+                                value="{{ last_username }}"
+                                name="_username"
+                                id="username"
+                                autocomplete="email"
+                                required
+                                autofocus
+                                class="input input-bordered w-full focus:input-primary"
+                                placeholder="vous@exemple.com"
+                            >
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-control w-full">
+                            <label for="password" class="label">
+                                <span class="label-text font-medium">Mot de passe</span>
+                            </label>
+                            <input
+                                type="password"
+                                name="_password"
+                                id="password"
+                                autocomplete="current-password"
+                                required
+                                class="input input-bordered w-full focus:input-primary"
+                                placeholder="••••••••"
+                            >
+                        </div>
+
+                        <!-- Remember Me Checkbox -->
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    name="_remember_me"
+                                    id="_remember_me"
+                                    class="checkbox checkbox-primary checkbox-sm"
+                                >
+                                <span class="label-text">Se souvenir de moi</span>
+                            </label>
+                        </div>
+
+                        <!-- CSRF Token -->
+                        <input
+                            type="hidden"
+                            name="_csrf_token"
+                            data-controller="csrf-protection"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <!-- Submit Button -->
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-full text-base sm:text-lg"
+                        >
+                            Se connecter
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="divider text-xs sm:text-sm">OU</div>
+
+                        <!-- Additional Links -->
+                        <div class="text-center space-y-2">
+                            <a href="#" class="link link-hover text-sm block">Mot de passe oublié ?</a>
+                            <p class="text-sm text-base-content/70">
+                                Pas encore de compte ?
+                                <a href="#" class="link link-primary font-medium">S'inscrire</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Text -->
+            <p class="text-center text-base-content/60 text-xs sm:text-sm mt-6 sm:mt-8">
+                © 2025 - Tous droits réservés
+            </p>
+        </div>
+    </div>
+{% endblock %}

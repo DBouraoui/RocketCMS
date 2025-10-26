@@ -5,6 +5,10 @@ namespace App\Entity;
 use App\Enum\ThemesEnum;
 use App\Repository\SettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: SettingsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -16,15 +20,23 @@ class Settings
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[NotBlank(message: 'Le titre ne peut être vide')]
+    #[Length(min:1, max: 40, minMessage: 'Le titre doit comporté au minimum 1 caracètre', maxMessage: 'Le titre ne peut comporter plus de 40 caractères')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[NotBlank(message: 'La description ne peut être vide')]
+    #[Length(min:1, max: 255, minMessage: 'La description doit comporté au minimum 1 caracètre', maxMessage: 'La description ne peut comporter plus de 255 caractères')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[NotBlank(message: 'Le mail de contact ne peut être vide')]
+    #[Email(message: 'Le mail doit être correct')]
     private ?string $contactEmail = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Length(exactly: 10, exactMessage: 'Le numéro de téléphone doit être composer de 10 chiffres')]
+    #[Regex('/^(0[67](?:\d{2}[- ]?){4})$/', message: 'Veuillez saisir un numéro de téléphone valide')]
     private ?string $contactPhone = null;
 
     #[ORM\Column(length: 255, nullable: true)]

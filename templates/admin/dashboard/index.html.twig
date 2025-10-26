@@ -1,18 +1,24 @@
-{% block title %}Hello Admin/dashboardController!{% endblock %}
+{%  extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="container mx-auto px-6 md:px-12 py-12 pt-4">
+        <div class="bg-base-200 rounded-xl p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <!-- Texte de bienvenue -->
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                    Bienvenue sur votre dashboard
+                </h1>
+                <p class="text-gray-700 text-sm md:text-base">
+                    Suivez vos projets, vos statistiques et gérez vos contenus facilement depuis une interface claire et intuitive.
+                </p>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <!-- Actions rapides -->
+            <div class="flex flex-wrap gap-4">
+            </div>
+        </div>
+    </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/dylanbouraoui/Development/rocketcms/src/Controller/Admin/dashboardController.php</code></li>
-        <li>Your template at <code>/Users/dylanbouraoui/Development/rocketcms/templates/admin/dashboard/index.html.twig</code></li>
-    </ul>
-</div>
 {% endblock %}

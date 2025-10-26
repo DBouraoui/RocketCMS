@@ -31,6 +31,11 @@ class CacheService
         });
     }
 
+    public function resetMenuLinks(): void
+    {
+        $this->cache->delete('navbar_links');
+    }
+
     public function getSettings(): Settings
     {
        return $this->cache->get('settings', function (ItemInterface $item) {
@@ -48,5 +53,9 @@ class CacheService
 
             return $settings;
         });
+    }
+
+    public function resetSettings() {
+        $this->cache->delete('settings');
     }
 }

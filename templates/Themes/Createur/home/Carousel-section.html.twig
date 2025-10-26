@@ -1,0 +1,59 @@
+<section id="portfolio" class="bg-base-100 py-20 px-6 md:px-12">
+    <div class="max-w-xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Nos créations</h2>
+        <p class="text-base-content/80 mb-12 max-w-2xl mx-auto">
+            Découvrez quelques-unes de nos réalisations récentes. Chaque projet est une histoire unique, façonnée avec passion et créativité.
+        </p>
+
+        <div class="relative overflow-hidden rounded-2xl shadow-xl">
+            <!-- Slides container -->
+            <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
+                <img
+                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
+                    alt="Création 1"
+                    class="w-full flex-shrink-0 object-cover"
+                />
+                <img
+                    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80"
+                    alt="Création 2"
+                    class="w-full flex-shrink-0 object-cover"
+                />
+                <img
+                    src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1920&q=80"
+                    alt="Création 3"
+                    class="w-full flex-shrink-0 object-cover"
+                />
+            </div>
+
+            <!-- Boutons de navigation -->
+            <button
+                id="prev"
+                class="absolute top-1/2 left-4 -translate-y-1/2 btn btn-circle btn-sm md:btn-md"
+            >
+                ❮
+            </button>
+            <button
+                id="next"
+                class="absolute top-1/2 right-4 -translate-y-1/2 btn btn-circle btn-sm md:btn-md"
+            >
+                ❯
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const slides = carousel.children.length;
+        let index = 0;
+
+        document.getElementById('next').addEventListener('click', () => {
+            index = (index + 1) % slides;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            index = (index - 1 + slides) % slides;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        });
+    </script>
+</section>

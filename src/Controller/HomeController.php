@@ -16,7 +16,6 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-
         return $this->render('Themes/'.$this->settingsService->getTheme().'/home/index.html.twig');
     }
 }

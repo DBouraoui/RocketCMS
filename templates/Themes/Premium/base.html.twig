@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="corporate" lang="fr">
+<html data-theme="forest" lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{{ settings.title|default("Mon site web") }}{% endblock %}</title>
@@ -17,6 +17,6 @@
     </head>
     <body class="container">
         {% block body %}{% endblock %}
-        {% include('./Themes/Business/components/Footer.html.twig') %}
+        {% include('./Themes/Premium/components/Footer.html.twig') %}
     </body>
 </html>

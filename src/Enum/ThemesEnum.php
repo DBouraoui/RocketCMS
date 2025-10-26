@@ -4,4 +4,6 @@ enum ThemesEnum: string
 {
     case BUSINESS = "Business";
     case CREATEUR = "Createur";
+    case PREMIUM = "Premium";
+    case STARTUP = "Startup";
 }

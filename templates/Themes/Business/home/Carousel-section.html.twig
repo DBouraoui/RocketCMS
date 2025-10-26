@@ -1,0 +1,49 @@
+<section id="portfolio" class="bg-gray-50 py-24 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16">
+            Nos réalisations
+        </h2>
+
+        <div class="relative">
+            <!-- Carousel container -->
+            <div id="carousel" class="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-6 scrollbar-hide">
+                <!-- Item 1 -->
+                <div class="snap-start flex-shrink-0 w-80 md:w-96 rounded-xl bg-white shadow hover:shadow-lg transition transform hover:scale-105">
+                    <img src="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1974" alt="Projet 1" class="rounded-t-xl w-full h-56 object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Projet 1</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">Une solution digitale sur-mesure, élégante et performante.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="snap-start flex-shrink-0 w-80 md:w-96 rounded-xl bg-white shadow hover:shadow-lg transition transform hover:scale-105">
+                    <img src="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1974" alt="Projet 2" class="rounded-t-xl w-full h-56 object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Projet 2</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">Interface utilisateur optimisée pour la performance et la simplicité.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="snap-start flex-shrink-0 w-80 md:w-96 rounded-xl bg-white shadow hover:shadow-lg transition transform hover:scale-105">
+                    <img src="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1974" alt="Projet 3" class="rounded-t-xl w-full h-56 object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Projet 3</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">Design minimaliste et expérience utilisateur fluide.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flèches -->
+            <button onclick="document.getElementById('carousel').scrollBy({ left: -400, behavior: 'smooth' })"
+                    class="absolute top-1/2 -translate-y-1/2 left-0 bg-gray-200/70 hover:bg-gray-300 text-gray-900 rounded-full p-3 shadow-md transition">
+                &#10094;
+            </button>
+            <button onclick="document.getElementById('carousel').scrollBy({ left: 400, behavior: 'smooth' })"
+                    class="absolute top-1/2 -translate-y-1/2 right-0 bg-gray-200/70 hover:bg-gray-300 text-gray-900 rounded-full p-3 shadow-md transition">
+                &#10095;
+            </button>
+        </div>
+    </div>
+</section>

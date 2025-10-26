@@ -1,0 +1,60 @@
+<section id="faq" class="bg-slate-900 text-slate-100 py-24 px-6 md:px-12 relative">
+    <div class="max-w-4xl mx-auto relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+        Foire aux questions
+      </span>
+        </h2>
+
+        <div class="space-y-6">
+            <!-- Question 1 -->
+            <div class="bg-slate-800 rounded-md p-6 shadow-lg cursor-pointer faq-item transition-all duration-300">
+                <h3 class="flex justify-between items-center text-xl font-semibold text-cyan-400">
+                    Comment démarrez-vous un projet avec une startup ?
+                    <span class="faq-icon text-2xl">+</span>
+                </h3>
+                <p class="mt-4 text-slate-300 faq-answer hidden">
+                    Nous commençons par comprendre votre vision et vos besoins, puis nous proposons une solution sur-mesure avec un design moderne et minimaliste.
+                </p>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="bg-slate-800 rounded-md p-6 shadow-lg cursor-pointer faq-item transition-all duration-300">
+                <h3 class="flex justify-between items-center text-xl font-semibold text-cyan-400">
+                    Quels types de produits digitaux créez-vous ?
+                    <span class="faq-icon text-2xl">+</span>
+                </h3>
+                <p class="mt-4 text-slate-300 faq-answer hidden">
+                    Sites web, applications web, UI/UX design et branding pour startups ambitieuses. Nous allions performance et design premium.
+                </p>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="bg-slate-800 rounded-md p-6 shadow-lg cursor-pointer faq-item transition-all duration-300">
+                <h3 class="flex justify-between items-center text-xl font-semibold text-cyan-400">
+                    Offrez-vous un accompagnement après livraison ?
+                    <span class="faq-icon text-2xl">+</span>
+                </h3>
+                <p class="mt-4 text-slate-300 faq-answer hidden">
+                    Oui, nous proposons un suivi personnalisé pour chaque projet, pour assurer la performance, la maintenance et les évolutions futures.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.faq-icon');
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.textContent = '-';
+            } else {
+                answer.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        });
+    });
+</script>

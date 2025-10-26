@@ -1,0 +1,59 @@
+<nav class="w-screen h-14 border-b border-gray-200 shadow-black shadow-xl px-2">
+        <section class="w-full h-full flex items-center justify-between">
+            <div>
+                <p class="font-bold text-md capitalize">{{ settings.title|default('Myrocket') }}</p>
+            </div>
+            <div class="flex flex-row items-center gap-4 -translate-x-12 max-md:hidden">
+                {% for link in links %}
+                <a class="hover:text-blue-500" href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                <div class="md:hidden flex">
+                    <div class="drawer">
+                        <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
+                        <div class="drawer-content">
+                            <label for="my-drawer-1" class="btn btn-ghost drawer-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+                            </label>
+                        </div>
+                        <div class="drawer-side">
+                            <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
+
+                            <ul class="menu bg-base-200 min-h-full w-80 p-4 flex flex-col justify-between">
+
+                                <!-- Bloc context / info en haut -->
+                                <li class="mb-6">
+                                    <div class="p-4 text-center">
+                                        <h4 class="font-bold text-lg mb-2">{{ settings.title|default('') }}</h4>
+                                    </div>
+                                </li>
+
+                                <!-- Liens dynamiques -->
+                                <div class="flex-grow">
+                                    {% for link in links %}
+                                        <li>
+                                            <a class="hover:text-blue-500" href="{{ link.url }}">{{ link.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+
+                                <li class="mt-6">
+                                    <div class="text-sm text-gray-500">
+                                        {{ settings.contactEmail|default('') }}<br>
+                                       {{ settings.contactPhone|default('') }}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                    {#  desktop#}
+                </div>
+            </div>
+        </section>
+</nav>

@@ -22,10 +22,12 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
     {
         $settings = $this->cacheService->getSettings();
         $links = $this->cacheService->getMenuLinks();
+        $date = new \DateTime();
 
         return [
             'settings' => $settings,
             'links' => $links,
+            'date' => $date,
         ];
     }
 }

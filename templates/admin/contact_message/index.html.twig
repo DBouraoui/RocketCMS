@@ -1,0 +1,55 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Messages de contact{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Mes messages',
+        subtitle: 'Gérer vos messages reçus via le formulaire de contact'
+    } %}
+
+    <div class="overflow-x-auto bg-base-100 shadow-md rounded-xl border border-base-300 mt-6">
+        <table class="table w-full">
+            <thead class="bg-base-200 text-base-content/80 uppercase text-sm">
+            <tr>
+                <th class="w-16 text-center">#</th>
+                <th class="text-center">Données</th>
+                <th class="text-center">Date</th>
+                <th class="text-right pr-6">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact in contacts %}
+                <tr class="hover:bg-base-200/50 transition-colors">
+                    <td class="text-center text-base-content/70 font-medium">{{ contact.id }}</td>
+                    <td>
+                        {% for key, value in contact.data %}
+                            <p><strong>{{ key|capitalize }}:</strong> {{ value }}</p>
+                        {% endfor %}
+                    </td>
+                    <td class="text-center text-base-content/70">
+                        {{ contact.createdAt ? contact.createdAt|date('d/m/Y H:i') : '' }}
+                    </td>
+                    <td class="text-right pr-6">
+                        <div class="join join-horizontal">
+                            <a href="{{ path('app_contact_message_show', {'id': contact.id}) }}" class="btn btn-xs btn-outline btn-primary join-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-blue-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </a>
+                            {{ include('admin/contact_message/_delete_form.html.twig', {'contact': contact}) }}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-6 text-base-content/50 italic">
+                        Aucun message reçu pour le moment.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

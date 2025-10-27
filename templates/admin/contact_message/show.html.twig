@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Message de contact{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Détails du message',
+        subtitle: 'Consultez les informations envoyées via le formulaire de contact'
+    } %}
+
+    <div class="max-w-3xl mx-auto bg-base-100 p-8 rounded-xl shadow-md mt-6">
+        <h2 class="text-xl font-bold mb-4">Message #{{ contact.id }}</h2>
+        <p class="text-sm text-base-content/70 mb-6">Envoyé le : {{ contact.createdAt ? contact.createdAt|date('d/m/Y H:i') : '' }}</p>
+
+        <div class="space-y-4">
+            {% for key, value in contact.data %}
+                <div class="bg-base-200 p-4 rounded-lg">
+                    <strong class="capitalize">{{ key }}:</strong>
+                    <p class="mt-1">{{ value }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-6 flex justify-between items-center">
+            <a href="{{ path('app_contact_message_index') }}" class="btn btn-outline btn-primary">Retour à la liste</a>
+
+            {{ include('admin/contact_message/_delete_form.html.twig', {'contact': contact}) }}
+        </div>
+    </div>
+{% endblock %}

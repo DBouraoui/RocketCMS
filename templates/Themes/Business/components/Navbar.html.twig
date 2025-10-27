@@ -1,7 +1,7 @@
 <nav class="w-screen h-14 border-b border-gray-200 shadow-black shadow-xl px-2">
         <section class="w-full h-full flex items-center justify-between">
             <div>
-                <p class="font-bold text-md capitalize">{{ settings.title|default('Myrocket') }}</p>
+                <a href="/" class="font-bold text-md capitalize">{{ settings.title|default('Myrocket') }}</a>
             </div>
             <div class="flex flex-row items-center gap-4 -translate-x-12 max-md:hidden">
                 {% for link in links %}

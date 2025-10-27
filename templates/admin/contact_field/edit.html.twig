@@ -1,0 +1,24 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier le champ : {{ contact_field.label ?? contact_field.name }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Modifier un champ de contact',
+        subtitle: 'Ajustez les propriétés de ce champ selon vos besoins.'
+    } %}
+
+    <div class=" p-8 rounded-xl  mb-8">
+        {{ include('admin/contact_field/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_contact_field_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+
+        <div class="flex gap-2">
+            {{ include('admin/contact_field/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

@@ -16,8 +16,7 @@
         {% endblock %}
     </head>
     <body class="container">
-        <twig:Navbar />
+        {% include 'components/toast.html.twig' %}
         {% block body %}{% endblock %}
-        <twig:Footer />
     </body>
 </html>

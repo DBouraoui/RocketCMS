@@ -1,0 +1,48 @@
+<div class="bg-base-100 p-8 rounded-xl shadow-md">
+    {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+    <div class="form-control w-full">
+        {{ form_label(form.label, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.label, {'attr': {'class': 'input input-bordered w-full'}}) }}
+        {{ form_errors(form.label) }}
+    </div>
+
+    <div class="form-control w-full">
+        {{ form_label(form.name, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'input input-bordered w-full'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="form-control w-full">
+        {{ form_label(form.type, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.type, {'attr': {'class': 'select select-bordered w-full'}}) }}
+        {{ form_errors(form.type) }}
+    </div>
+
+    <div class="form-control w-full">
+        {{ form_label(form.options, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.options, {'attr': {'class': 'textarea textarea-bordered w-full', 'placeholder': 'Ex: Oui, Non, Peut-être'}}) }}
+        <label class="label text-sm opacity-70">Saisis les options séparées par des virgules</label>
+        {{ form_errors(form.options) }}
+    </div>
+
+    <div class="form-control w-full flex-row items-center gap-3">
+        {{ form_widget(form.isRequired, {'attr': {'class': 'checkbox checkbox-primary'}}) }}
+        {{ form_label(form.isRequired, null, {'label_attr': {'class': 'font-semibold'}}) }}
+        {{ form_errors(form.isRequired) }}
+    </div>
+
+    <div class="form-control w-full">
+        {{ form_label(form.orderIndex, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.orderIndex, {'attr': {'class': 'input input-bordered w-full', 'min': 1}}) }}
+        {{ form_errors(form.orderIndex) }}
+    </div>
+
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-primary">
+            {{ button_label|default('Enregistrer le champ de formulaire') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,84 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détail du champ : {{ contact_field.label }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Détail du champ de contact',
+        subtitle: 'Consultez les informations de ce champ personnalisé.'
+    } %}
+
+    <div class="bg-base-100 p-8 rounded-xl shadow-md border border-base-300 mb-8">
+        <h2 class="text-lg font-semibold text-base-content mb-4">
+            {{ contact_field.label ?? contact_field.name }}
+        </h2>
+
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <tbody class="text-sm">
+                <tr>
+                    <th class="w-40 text-base-content/70">Identifiant</th>
+                    <td>{{ contact_field.id }}</td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Nom interne</th>
+                    <td>{{ contact_field.name }}</td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Label affiché</th>
+                    <td>{{ contact_field.label }}</td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Obligatoire</th>
+                    <td>
+                        {% if contact_field.isRequired %}
+                            <span class="badge badge-success badge-sm">Oui</span>
+                        {% else %}
+                            <span class="badge badge-ghost badge-sm">Non</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Options</th>
+                    <td>
+                        {% if contact_field.options %}
+                            <ul class="list-disc list-inside text-base-content/80">
+                                {% for option in contact_field.options %}
+                                    <li>{{ option }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <span class="italic text-base-content/50">Aucune option définie</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Ordre d’affichage</th>
+                    <td>{{ contact_field.orderIndex ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th class="text-base-content/70">Type de champ</th>
+                    <td>
+                            <span class="badge badge-outline badge-sm">
+                                {{ contact_field.type.value }}
+                            </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_contact_field_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+
+        <div class="flex gap-2">
+            <a href="{{ path('app_contact_field_edit', {'id': contact_field.id}) }}" class="btn btn-primary">
+                Modifier
+            </a>
+            {{ include('admin/contact_field/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

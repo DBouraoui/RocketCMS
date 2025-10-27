@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\ContactFieldTypeEnum;
 use App\Repository\ContactFieldRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,8 +20,6 @@ class ContactField
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $label = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $type = null;
 
     #[ORM\Column]
     private ?bool $isRequired = null;
@@ -30,6 +29,9 @@ class ContactField
 
     #[ORM\Column(nullable: true)]
     private ?int $orderIndex = null;
+
+    #[ORM\Column(enumType: ContactFieldTypeEnum::class)]
+    private ?ContactFieldTypeEnum $type = null;
 
     public function getId(): ?int
     {
@@ -60,18 +62,6 @@ class ContactField
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function isRequired(): ?bool
     {
         return $this->isRequired;
@@ -89,8 +79,14 @@ class ContactField
         return $this->options;
     }
 
-    public function setOptions(?array $options): static
+    public function setOptions(string|array|null $options): static
     {
+        if (is_string($options)) {
+            $options = array_map('trim', explode(',', $options));
+        } else {
+            $options = $options ?? [];
+        }
+
         $this->options = $options;
 
         return $this;
@@ -101,9 +97,21 @@ class ContactField
         return $this->orderIndex;
     }
 
-    public function setOrdreIndex(?int $orderIndex): static
+    public function setOrderIndex(?int $orderIndex): static
     {
         $this->orderIndex = $orderIndex;
+
+        return $this;
+    }
+
+    public function getType(): ?ContactFieldTypeEnum
+    {
+        return $this->type;
+    }
+
+    public function setType(ContactFieldTypeEnum $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

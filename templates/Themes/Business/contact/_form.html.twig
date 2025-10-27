@@ -1,0 +1,71 @@
+<form method="post" action="{{ path('app_contact_post') }}">
+
+    {% for field in fields %}
+        <div class="form-control mb-5">
+            {% if field.type.value != 'checkbox' %}
+                <label class="label">
+                        <span class="label-text font-semibold">
+                            {{ field.label }}
+                            {% if field.isRequired %}
+                                <span class="text-error">*</span>
+                            {% endif %}
+                        </span>
+                </label>
+            {% endif %}
+
+            {% if field.type.value == 'text' %}
+                <input
+                    type="text"
+                    name="{{ field.name }}"
+                    class="input input-bordered w-full"
+                    {% if field.isRequired %}required{% endif %}
+                >
+
+            {% elseif field.type.value == 'email' %}
+                <input
+                    type="email"
+                    name="{{ field.name }}"
+                    class="input input-bordered w-full"
+                    {% if field.isRequired %}required{% endif %}
+                >
+
+            {% elseif field.type.value == 'textarea' %}
+                <textarea
+                    name="{{ field.name }}"
+                    class="textarea textarea-bordered w-full"
+                    {% if field.isRequired %}required{% endif %}
+                    ></textarea>
+
+            {% elseif field.type.value == 'select' %}
+                <select
+                    name="{{ field.name }}"
+                    class="select select-bordered w-full"
+                    {% if field.isRequired %}required{% endif %}
+                >
+                    <option value="">-- Choisir --</option>
+                    {% for option in field.options ?? [] %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+
+            {% elseif field.type.value == 'checkbox' %}
+                <label class="cursor-pointer flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        name="{{ field.name }}"
+                        class="checkbox"
+                        value="1"
+                        {% if field.isRequired %}required{% endif %}
+                    />
+                    <span>{{ field.label }}</span>
+                </label>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('contact_form') }}">
+
+    <button type="submit" class="btn btn-primary mt-4 w-full">
+        Envoyer
+    </button>
+</form>

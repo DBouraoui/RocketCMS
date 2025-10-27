@@ -15,6 +15,7 @@
                 <th class="w-16 text-center">#</th>
                 <th class="text-center">Données</th>
                 <th class="text-center">Date</th>
+                <th class="text-center">Ouvert</th>
                 <th class="text-right pr-6">Actions</th>
             </tr>
             </thead>
@@ -30,6 +31,13 @@
                     <td class="text-center text-base-content/70">
                         {{ contact.createdAt ? contact.createdAt|date('d/m/Y H:i') : '' }}
                     </td>
+                    <td class="text-center">
+                        {% if contact.isRead %}
+                            <span class="badge badge-success badge-sm">Oui</span>
+                        {% else %}
+                            <span class="badge badge-warning badge-sm">Non</span>
+                        {% endif %}
+                    </td>
                     <td class="text-right pr-6">
                         <div class="join join-horizontal">
                             <a href="{{ path('app_contact_message_show', {'id': contact.id}) }}" class="btn btn-xs btn-outline btn-primary join-item">
@@ -44,7 +52,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4" class="text-center py-6 text-base-content/50 italic">
+                    <td colspan="5" class="text-center py-6 text-base-content/50 italic">
                         Aucun message reçu pour le moment.
                     </td>
                 </tr>

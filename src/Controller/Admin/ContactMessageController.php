@@ -45,6 +45,10 @@ final class ContactMessageController extends AbstractController
     public function show(ContactSubmission $contactSubmission): Response
     {
 
+        $contactSubmission->setIsRead(true);
+
+        $this->entityManager->flush();
+
         return $this->render('admin/contact_message/show.html.twig',
             [
                 'contact' => $contactSubmission,

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Entity\ContactSubmission;
+use App\Entity\MenuLink;
 use App\Repository\MenuLinkRepository;
 use App\Service\CacheService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,4 +72,45 @@ class PageController extends AbstractController
             return $this->redirectToRoute('app_admin_pages');
         }
     }
+
+    #[Route('/admin/page/{id}/footer', name: 'app_admin_page_update_footer', methods: ['POST'])]
+    public function updateFooter(MenuLink $menuLink, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('update'.$menuLink->getId(), $request->request->get('_token'))) {
+
+            $menuLink->setIsFooter(!$menuLink->isFooter());
+
+            $this->entityManager->flush();
+
+            $this->cacheService->resetMenuLinks();
+
+
+            $this->addFlash('success', 'Le menu a été modifié.');
+        } else {
+            $this->addFlash('danger', 'Token CSRF invalide.');
+        }
+
+        return $this->redirectToRoute('app_admin_pages');
+    }
+
+    #[Route('/admin/page/{id}/navbar', name: 'app_admin_page_update_navbar', methods: ['POST'])]
+    public function updateNavbar(MenuLink $menuLink, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('update'.$menuLink->getId(), $request->request->get('_token'))) {
+
+            $menuLink->setIsNavbar(!$menuLink->isNavbar());
+
+            $this->entityManager->flush();
+
+            $this->cacheService->resetMenuLinks();
+
+
+            $this->addFlash('success', 'Le menu a été modifié.');
+        } else {
+            $this->addFlash('danger', 'Token CSRF invalide.');
+        }
+
+        return $this->redirectToRoute('app_admin_pages');
+    }
+
 }

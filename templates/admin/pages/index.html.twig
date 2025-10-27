@@ -1,6 +1,6 @@
 {%  extends 'admin/base.html.twig' %}
 
-{% block title %}Paramètres{% endblock %}
+{% block title %}Mes pages{% endblock %}
 {% block body %}
 
     {% include'admin/components/Header.html.twig' with {
@@ -16,6 +16,8 @@
                 <th class="text-center">Titre</th>
                 <th class="text-center">Slug</th>
                 <th class="text-center">URI</th>
+                <th class="text-center">Menu de navigation</th>
+                <th class="text-center">Pied de page</th>
                 <th class="text-center">État</th>
                 <th class="text-right pr-6">Actions</th>
             </tr>
@@ -33,6 +35,16 @@
                         {{ page.url|default('Aucune URL') }}
                         {% endif %}
                     </td>
+
+                    <td class="text-base-content/70 cursor-pointer">
+                        {% include 'admin/pages/_update_navbar_menu.html.twig' with { menuLink: page } %}
+
+                    </td>
+
+                    <td class="text-center cursor-pointer">
+                        {% include 'admin/pages/_update_footer_menu.html.twig' with { menuLink: page } %}
+                    </td>
+
                     <td class="text-center">
                         {% if page.isActive %}
                             <span class="badge badge-primary badge-sm">Actif</span>

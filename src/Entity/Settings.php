@@ -54,6 +54,9 @@ class Settings
     #[ORM\Column(enumType: ThemesEnum::class)]
     private ?ThemesEnum $theme = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isNewsletter = null;
+
 
     #[ORM\PrePersist]
     function persist() {
@@ -174,6 +177,18 @@ class Settings
     public function setTheme(ThemesEnum $theme): static
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function isNewsletter(): ?bool
+    {
+        return $this->isNewsletter;
+    }
+
+    public function setIsNewsletter(?bool $isNewsletter): static
+    {
+        $this->isNewsletter = $isNewsletter;
 
         return $this;
     }

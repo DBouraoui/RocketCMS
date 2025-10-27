@@ -31,6 +31,12 @@ class MenuLink
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?bool $isFooter = null;
+
+    #[ORM\Column]
+    private ?bool $isNavbar = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +110,30 @@ class MenuLink
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isFooter(): ?bool
+    {
+        return $this->isFooter;
+    }
+
+    public function setIsFooter(bool $isFooter): static
+    {
+        $this->isFooter = $isFooter;
+
+        return $this;
+    }
+
+    public function isNavbar(): ?bool
+    {
+        return $this->isNavbar;
+    }
+
+    public function setIsNavbar(bool $isNavbar): static
+    {
+        $this->isNavbar = $isNavbar;
 
         return $this;
     }

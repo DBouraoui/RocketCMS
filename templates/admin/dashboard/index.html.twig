@@ -3,22 +3,9 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-    <section class="container mx-auto px-6 md:px-12 py-12 pt-4">
-        <div class="bg-base-200 rounded-xl p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <!-- Texte de bienvenue -->
-            <div>
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                    Bienvenue sur votre dashboard
-                </h1>
-                <p class="text-gray-700 text-sm md:text-base">
-                    Suivez vos projets, vos statistiques et gérez vos contenus facilement depuis une interface claire et intuitive.
-                </p>
-            </div>
-
-            <!-- Actions rapides -->
-            <div class="flex flex-wrap gap-4">
-            </div>
-        </div>
-    </section>
+    {% include'admin/components/Header.html.twig' with {
+        title: 'Back office made in MyRocket !',
+        subtitle: 'Modifier votre sites web comme vous le souhaitez'
+    } %}
 
 {% endblock %}

@@ -2,8 +2,76 @@
 
 {% block title %}Paramètres{% endblock %}
 {% block body %}
-    <section>
-        page section
-    </section>
+
+    {% include'admin/components/Header.html.twig' with {
+        title: 'Modifications des pages',
+        subtitle: 'Modification des pages sans restriction'
+    } %}
+
+    <div class="overflow-x-auto bg-base-100 shadow-md rounded-xl border border-base-300">
+        <table class="table w-full">
+            <thead class="bg-base-200 text-base-content/80 uppercase text-sm">
+            <tr>
+                <th class="w-16 text-center">#</th>
+                <th class="text-center">Titre</th>
+                <th class="text-center">Slug</th>
+                <th class="text-center">URI</th>
+                <th class="text-center">État</th>
+                <th class="text-right pr-6">Actions</th>
+            </tr>
+            </thead>
+            <tbody >
+            {% for page in pages %}
+                <tr class="hover:bg-base-200/50 transition-colors ">
+                    <td class="text-center text-base-content/70 font-medium">{{ page.id }}</td>
+                    <td class="font-semibold text-base-content">{{ page.title|default('Aucun titre') }}</td>
+                    <td class="text-base-content/70">{{ page.slug|default('Aucun slug') }}</td>
+                    <td class="text-base-content/70">
+                        {%  if page.url %}
+                            <a href="{{ page.url }}" class=" text-blue-500">{{ page.url }}</a>
+                        {% else %}
+                        {{ page.url|default('Aucune URL') }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if page.isActive %}
+                            <span class="badge badge-primary badge-sm">Actif</span>
+                        {% else %}
+                            <span class="badge badge-error badge-sm">Inactif</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-right pr-6">
+                        <div class="join join-horizontal">
+                            <form method="post" action="{{ path('app_admin_page_toggle', { id: page.id }) }}" class="inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('toggle-page-' ~ page.id) }}">
+                                <button type="submit" class="btn btn-xs btn-outline btn-{{ page.isActive ? 'warning' : 'success' }} join-item">
+                                    {% if page.isActive %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                        </svg>
+                                        Désactiver
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Activer
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-6 text-base-content/50 italic">
+                        Aucune page trouvée pour le moment.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
 {% endblock %}
 

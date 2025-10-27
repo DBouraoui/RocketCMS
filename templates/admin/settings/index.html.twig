@@ -5,7 +5,11 @@
 {% block body %}
     <section>
 
-        {% include('admin/settings/Header-settings.html.twig') %}
+        {% include'admin/components/Header.html.twig' with {
+            title: 'Modifications des paramètres',
+            subtitle: 'Modification des pages sans restriction'
+        } %}
+
 
         <div class="bg-base-100 p-8 rounded-xl shadow-md">
 

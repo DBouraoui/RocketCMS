@@ -24,6 +24,10 @@ final class NewsletterController extends AbstractController
     {
        $newsletterStructure = $this->menuLinkRepository->findOneBy(['slug' => 'newsletter']);
 
+       if (!$newsletterStructure->isActive()) {
+           return $this->redirectToRoute('app_home');
+       }
+
         $form = $this->createForm(NewsletterType::class);
         $form->handleRequest($request);
 

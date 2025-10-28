@@ -1,0 +1,43 @@
+<div class="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm transition hover:shadow-md">
+    {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+    <div class="form-control w-full text-left">
+        {{ form_label(form.phone, null, {'label_attr': {'class': 'block mb-2 font-semibold text-neutral-700'}}) }}
+        {{ form_widget(form.phone, {'attr': {
+            'class': 'input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400',
+            'placeholder': 'Votre numéro de téléphone'
+        }}) }}
+        {{ form_errors(form.phone) }}
+    </div>
+
+    <div class="form-control w-full text-left">
+        {{ form_label(form.name, null, {'label_attr': {'class': 'block mb-2 font-semibold text-neutral-700'}}) }}
+        {{ form_widget(form.name, {'attr': {
+            'class': 'input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400',
+            'placeholder': 'Votre nom'
+        }}) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="form-control w-full text-left">
+        {{ form_label(form.reason, null, {'label_attr': {'class': 'block mb-2 font-semibold text-neutral-700'}}) }}
+        {{ form_widget(form.reason, {'attr': {
+            'class': 'input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400',
+            'placeholder': 'La raison du rappel'
+        }}) }}
+        {{ form_errors(form.reason) }}
+    </div>
+
+    <div style="display:none;">
+        <label for="reminder_phone_hp">Ne pas remplir ce champ</label>
+        <input type="text" id="reminder_phone_hp" name="reminder_phone_hp" autocomplete="off">
+    </div>
+
+    <div class="form-control mt-8">
+        <button type="submit" class="btn w-full bg-black text-white hover:bg-neutral-800 transition font-semibold py-3 rounded-md">
+            {{ reminderPhone.button_label|default('Envoyer la demande de rappel') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

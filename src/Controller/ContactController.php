@@ -26,6 +26,10 @@ final class ContactController extends AbstractController
     {
        $contact = $this->menuLinkRepository->findOneBy(['slug'=>'contact']);
 
+       if (!$contact->isActive()) {
+           return $this->redirectToRoute('app_home');
+       }
+
         $fields = $this->contactFieldRepository->findBy([], ['orderIndex' => 'ASC']);
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/contact/index.html.twig', [
@@ -54,6 +58,7 @@ final class ContactController extends AbstractController
         // Récupération de tous les champs dynamiques
         $data = $request->request->all();
         unset($data['_csrf_token']); // retirer le token du tableau
+        unset($data['contact_hp']); // retirer le token du tableau
 
         $submission = new ContactSubmission();
         $submission->setData($data)

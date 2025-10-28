@@ -1,0 +1,20 @@
+<div class="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm transition hover:shadow-md">
+    {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+    <div class="form-control w-full text-left">
+        {{ form_label(form.email, null, {'label_attr': {'class': 'block mb-2 font-semibold text-neutral-700'}}) }}
+        {{ form_widget(form.email, {'attr': {
+            'class': 'input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400',
+            'placeholder': 'Votre adresse email'
+        }}) }}
+        {{ form_errors(form.email) }}
+    </div>
+
+    <div class="form-control mt-8">
+        <button type="submit" class="btn w-full bg-black text-white hover:bg-neutral-800 transition font-semibold py-3 rounded-md">
+            {{ button_label|default('S’inscrire à la newsletter') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

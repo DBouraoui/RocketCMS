@@ -1,15 +1,13 @@
-<form method="post" action="{{ path('app_contact_post') }}">
+<form method="post" action="{{ path('app_contact_post') }}" class="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm transition hover:shadow-md space-y-6">
 
     {% for field in fields %}
-        <div class="form-control mb-5">
+        <div class="form-control text-left">
             {% if field.type.value != 'checkbox' %}
-                <label class="label">
-                        <span class="label-text font-semibold">
-                            {{ field.label }}
-                            {% if field.isRequired %}
-                                <span class="text-error">*</span>
-                            {% endif %}
-                        </span>
+                <label class="block mb-2 font-semibold text-neutral-700">
+                    {{ field.label }}
+                    {% if field.isRequired %}
+                        <span class="text-error">*</span>
+                    {% endif %}
                 </label>
             {% endif %}
 
@@ -17,7 +15,7 @@
                 <input
                     type="text"
                     name="{{ field.name }}"
-                    class="input input-bordered w-full"
+                    class="input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400"
                     {% if field.isRequired %}required{% endif %}
                 >
 
@@ -25,21 +23,21 @@
                 <input
                     type="email"
                     name="{{ field.name }}"
-                    class="input input-bordered w-full"
+                    class="input w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400"
                     {% if field.isRequired %}required{% endif %}
                 >
 
             {% elseif field.type.value == 'textarea' %}
                 <textarea
                     name="{{ field.name }}"
-                    class="textarea textarea-bordered w-full"
+                    class="textarea w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 placeholder-neutral-400 min-h-[120px]"
                     {% if field.isRequired %}required{% endif %}
-                    ></textarea>
+                ></textarea>
 
             {% elseif field.type.value == 'select' %}
                 <select
                     name="{{ field.name }}"
-                    class="select select-bordered w-full"
+                    class="select w-full border border-neutral-300 focus:border-black focus:ring-0 rounded-md py-2 px-3 bg-white"
                     {% if field.isRequired %}required{% endif %}
                 >
                     <option value="">-- Choisir --</option>
@@ -49,15 +47,15 @@
                 </select>
 
             {% elseif field.type.value == 'checkbox' %}
-                <label class="cursor-pointer flex items-center gap-2">
+                <label class="flex items-center gap-3 cursor-pointer select-none">
                     <input
                         type="checkbox"
                         name="{{ field.name }}"
-                        class="checkbox"
+                        class="checkbox border-neutral-400 checked:bg-black checked:border-black"
                         value="1"
                         {% if field.isRequired %}required{% endif %}
                     />
-                    <span>{{ field.label }}</span>
+                    <span class="text-neutral-700">{{ field.label }}</span>
                 </label>
             {% endif %}
         </div>
@@ -65,7 +63,9 @@
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('contact_form') }}">
 
-    <button type="submit" class="btn btn-primary mt-4 w-full">
-        Envoyer
-    </button>
+    <div class="pt-4">
+        <button type="submit" class="btn w-full bg-black text-white hover:bg-neutral-800 transition font-semibold py-3 rounded-md">
+            Envoyer
+        </button>
+    </div>
 </form>

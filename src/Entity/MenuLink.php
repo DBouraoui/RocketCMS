@@ -25,8 +25,11 @@ class MenuLink
     #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $template = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $structure = null;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $content = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -90,15 +93,25 @@ class MenuLink
         return $this;
     }
 
-    public function getTemplate(): ?string
+    public function getStructure(): ?array
     {
-        return $this->template;
+        return $this->structure;
     }
 
-    public function setTemplate(string $template): static
+    public function setStructure(?array $structure): self
     {
-        $this->template = $template;
+        $this->structure = $structure;
+        return $this;
+    }
 
+    public function getContent(): ?array
+    {
+        return $this->content;
+    }
+
+    public function setContent(?array $content): self
+    {
+        $this->content = $content;
         return $this;
     }
 

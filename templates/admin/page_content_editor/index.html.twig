@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Éditeur de texte de page{% endblock %}
+
+{% block body %}
+
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Éditeur de page',
+        subtitle: 'Modifier le texte de votre page'
+    } %}
+
+    <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+        {{ form_start(form) }}
+
+        {% for child in form %}
+            {% if child.vars.name not in ['save', '_token'] %}
+                <div class="mb-4">
+                    {{ form_label(child, null, {'label_attr': {'class': 'font-semibold'}}) }}
+                    {{ form_widget(child, {'attr': {'class': 'input input-bordered w-full'}}) }}
+                    {% if child.vars.help %}
+                        <small class="text-gray-500">{{ child.vars.help }}</small>
+                    {% endif %}
+                    {{ form_errors(child) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+
+        <div class="mt-6">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Inscriptions à la newsletter{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Inscriptions à la newsletter',
+        subtitle: 'Visualisez les personnes abonnées à votre newsletter'
+    } %}
+
+    <div class="bg-white border border-neutral-200 rounded-2xl shadow-sm p-6 mt-8">
+        <table class="w-full text-left border-collapse">
+            <thead>
+            <tr class="border-b border-neutral-200 text-neutral-600 uppercase text-sm">
+                <th class="py-3 px-4 font-semibold">ID</th>
+                <th class="py-3 px-4 font-semibold">Email</th>
+                <th class="py-3 px-4 font-semibold">Date d’inscription</th>
+                <th class="py-3 px-4 font-semibold text-right">Action</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-neutral-100">
+            {% for newsletter in newsletters %}
+                <tr class="hover:bg-neutral-50 transition">
+                    <td class="py-3 px-4">{{ newsletter.id }}</td>
+                    <td class="py-3 px-4 font-medium">{{ newsletter.email }}</td>
+                    <td class="py-3 px-4 text-neutral-500 text-sm">
+                        {{ newsletter.createdAt|date('d/m/Y à H:i') }}
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <form method="post" action="{{ path('app_newsletter_delete', {id: newsletter.id}) }}" onsubmit="return confirm('Supprimer cette inscription ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ newsletter.id) }}">
+                            <button type="submit" class="text-white bg-black hover:bg-neutral-800 transition px-3 py-1.5 rounded-md text-sm font-semibold">
+                                Supprimer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="py-6 text-center text-neutral-400">
+                        Aucun inscrit pour le moment.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

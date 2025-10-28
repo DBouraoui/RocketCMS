@@ -23,6 +23,13 @@ final class NewsletterController extends AbstractController
         $form = $this->createForm(NewsletterType::class);
         $form->handleRequest($request);
 
+        $honeypot = $request->request->get('newsletter_hp');
+        if (!empty($honeypot)) {
+            // Si le champ est rempli → bot probable
+            $this->addFlash('error', 'Une erreur est survenue.');
+            return $this->redirectToRoute('app_newsletter');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newsletter = $form->getData();

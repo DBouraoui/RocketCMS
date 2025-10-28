@@ -8,6 +8,11 @@
             'placeholder': 'Votre adresse email'
         }}) }}
         {{ form_errors(form.email) }}
+
+        <div style="display:none;">
+            <label for="newsletter_hp">Ne pas remplir ce champ</label>
+            <input type="text" id="newsletter_hp" name="newsletter_hp" autocomplete="off">
+        </div>
     </div>
 
     <div class="form-control mt-8">

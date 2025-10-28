@@ -39,6 +39,13 @@ final class ContactController extends AbstractController
             return $this->redirectToRoute('app_contact_index');
         }
 
+        $honeypot = $request->request->get('contact_hp');
+        if (!empty($honeypot)) {
+            // Si le champ est rempli → bot probable
+            $this->addFlash('error', 'Une erreur est survenue.');
+            return $this->redirectToRoute('app_contact_index');
+        }
+
         // Récupération de tous les champs dynamiques
         $data = $request->request->all();
         unset($data['_csrf_token']); // retirer le token du tableau

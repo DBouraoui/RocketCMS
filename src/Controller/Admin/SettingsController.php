@@ -9,6 +9,7 @@ use App\Repository\SettingsRepository;
 use App\Service\CacheService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,15 +32,34 @@ class SettingsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile|null $logoFile */
+            $logoFile = $form->get('logo')->getData();
+            /** @var UploadedFile|null $faviconFile */
+            $faviconFile = $form->get('favicon')->getData();
+
+            // Dossier où stocker les fichiers
+            $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads';
+
+            if ($logoFile) {
+                $newFilename = uniqid('logo_') . '.' . $logoFile->guessExtension();
+                $logoFile->move($uploadDir, $newFilename);
+                $settings->setLogo('/uploads/' . $newFilename);
+            }
+
+            if ($faviconFile) {
+                $newFilename = uniqid('favicon_') . '.' . $faviconFile->guessExtension();
+                $faviconFile->move($uploadDir, $newFilename);
+                $settings->setFavicon('/uploads/' . $newFilename);
+            }
+
             $this->entityManager->flush();
-            // todo ajouter pour le logo et le favicon
             $this->cacheService->resetSettings();
 
             $this->addFlash('success', 'Paramètres enregistrés !');
             return $this->redirectToRoute('app_admin_settings');
         }
 
-        return $this->render('admin/settings/index.html.twig',[
+        return $this->render('admin/settings/index.html.twig', [
             'form' => $form,
         ]);
     }

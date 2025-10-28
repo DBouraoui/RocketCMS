@@ -1,0 +1,64 @@
+<div class="max-w-2xl mx-auto bg-white border border-gray-200 p-8 rounded-lg shadow-sm">
+
+    <h2 class="text-xl font-semibold mb-6 text-gray-800 text-center">
+        Paramètres du site
+    </h2>
+
+    {{ form_start(form, {'attr': {'class': 'space-y-5'}}) }}
+
+    {# Champs texte #}
+    {% for field in [form.title, form.description, form.contactEmail, form.contactPhone] %}
+        <div>
+            {{ form_label(field, null, {'label_attr': {'class': 'block mb-1 text-sm font-medium text-gray-700'}}) }}
+            {{ form_widget(field, {'attr': {'class': 'w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black'}}) }}
+            {{ form_errors(field) }}
+        </div>
+    {% endfor %}
+
+    {# Logo #}
+    <div>
+        {{ form_label(form.logo, null, {'label_attr': {'class': 'block mb-1 text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.logo, {'attr': {'class': 'w-full text-sm border border-gray-300 rounded-md px-3 py-2'}}) }}
+        {{ form_errors(form.logo) }}
+
+        {% if settings.logo %}
+            <div class="mt-2">
+                <img src="{{ settings.logo }}" alt="Logo actuel" class="h-10 border rounded-md">
+            </div>
+        {% endif %}
+    </div>
+
+    {# Favicon #}
+    <div>
+        {{ form_label(form.favicon, null, {'label_attr': {'class': 'block mb-1 text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.favicon, {'attr': {'class': 'w-full text-sm border border-gray-300 rounded-md px-3 py-2'}}) }}
+        {{ form_errors(form.favicon) }}
+
+        {% if settings.favicon %}
+            <div class="mt-2">
+                <img src="{{ settings.favicon }}" alt="Favicon actuel" class="h-8 border rounded-md">
+            </div>
+        {% endif %}
+    </div>
+
+    {% if form.theme is defined %}
+        <div>
+            {{ form_label(form.theme, null, {'label_attr': {'class': 'block mb-1 text-sm font-medium text-gray-700'}}) }}
+            {{ form_widget(form.theme, {'attr': {'class': 'w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black'}}) }}
+            {{ form_errors(form.theme) }}
+        </div>
+    {% endif %}
+
+    <div>
+        <button type="submit" class="w-full bg-black text-white text-sm font-medium py-2.5 rounded-md hover:bg-gray-900 transition">
+            Enregistrer les paramètres
+        </button>
+    </div>
+
+    <div class="mt-4 space-y-1 text-xs text-gray-500">
+        <p>⚠️ Certaines informations sont utilisées sur le site — vérifiez leur exactitude.</p>
+        <p>💡 Les modifications sont appliquées immédiatement.</p>
+    </div>
+
+    {{ form_end(form) }}
+</div>

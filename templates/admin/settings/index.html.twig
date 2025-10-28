@@ -1,6 +1,6 @@
 {%  extends 'admin/base.html.twig' %}
 
-{% block title %}Paramètres{% endblock %}
+{% block title %}Paramètres du site{% endblock %}
 
 {% block body %}
     <section>
@@ -10,80 +10,7 @@
             subtitle: 'Modification des pages sans restriction'
         } %}
 
+        {%  include ('admin/settings/_form.html.twig') %}
 
-        <div class="bg-base-100 p-8 rounded-xl shadow-md">
-
-            {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
-
-            <div class="form-control w-full">
-                {{ form_label(form.title, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.title, {'attr': {'class': 'input input-bordered w-full'}}) }}
-                {{ form_errors(form.title) }}
-            </div>
-
-            <div class="form-control w-full">
-                {{ form_label(form.description, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.description, {'attr': {'class': 'input input-bordered w-full'}}) }}
-                {{ form_errors(form.description) }}
-            </div>
-
-            <div class="form-control w-full">
-                {{ form_label(form.contactEmail, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.contactEmail, {'attr': {'class': 'input input-bordered w-full'}}) }}
-                {{ form_errors(form.contactEmail) }}
-            </div>
-
-            <div class="form-control w-full">
-                {{ form_label(form.contactPhone, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.contactPhone, {'attr': {'class': 'input input-bordered w-full'}}) }}
-                {{ form_errors(form.contactPhone) }}
-            </div>
-
-            <div class="form-control w-full">
-                {{ form_label(form.logo, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.logo, {'attr': {'class': 'file-input file-input-bordered w-full'}}) }}
-                {{ form_errors(form.logo) }}
-            </div>
-
-            <div class="form-control w-full">
-                {{ form_label(form.favicon, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                {{ form_widget(form.favicon, {'attr': {'class': 'file-input file-input-bordered w-full'}}) }}
-                {{ form_errors(form.favicon) }}
-            </div>
-
-            {% if form.theme is defined %}
-                <div class="form-control w-full">
-                    {{ form_label(form.theme, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-                    {{ form_widget(form.theme, {'attr': {'class': 'select select-bordered w-full'}}) }}
-                    {{ form_errors(form.theme) }}
-                </div>
-            {% endif %}
-
-            <div class="form-control mt-6">
-                <button type="submit" class="btn btn-primary">
-                    Enregistrer les paramètres
-                </button>
-            </div>
-
-           <div class="flex flex-row gap-2 items-center">
-               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-600">
-                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-               </svg>
-               <p class="text-gray-500 text-xs">
-                   Certaines informations sont repris dans les élements du sites web vérifier l'exactitude de vos informations
-               </p>
-           </div>
-
-            <div class="flex flex-row gap-2 items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                </svg>
-                <p class="text-gray-500 text-xs">
-                    Les moficiations éffectués sont instantanées
-                </p>
-            </div>
-
-            {{ form_end(form) }}
-        </div>
     </section>
 {% endblock %}

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class SettingsType extends AbstractType
 {
@@ -22,8 +23,35 @@ class SettingsType extends AbstractType
             ->add('description',TextType::class, ['required' => true, 'label' => 'Description du site web'])
             ->add('contactEmail',EmailType::class, ['required' => true, 'label' => 'Email de contact'])
             ->add('contactPhone',TextType::class, ['required' => true, 'label' => 'Numéro de téléphone de contact'])
-            ->add('logo', FileType::class, ['required' => false, 'label' => 'Logo de votre site web'])
-            ->add('favicon', FileType::class, ['required' => false, 'label' => 'Logo afficher sur Google'])
+            ->add('logo', FileType::class,
+                [
+                    'required' => false,
+                    'label' => 'Logo de votre site web',
+                    'mapped' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '6M',
+                            'mimeTypes' => ['image/jpeg', 'image/png', 'image/svg+xml'],
+                            'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG, PNG, SVG)',
+                            'maxSizeMessage' => 'Veuillez uploader une image maximum %s Mo',
+                        ])
+                    ]
+                ])
+            ->add('favicon', FileType::class,
+                [
+                    'required' => false,
+                    'label' => 'Logo afficher sur Google',
+                    'mapped' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '4M',
+                            'mimeTypes' => ['image/jpeg', 'image/png', 'image/svg+xml'],
+                            'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG, PNG, SVG)',
+                            'maxSizeMessage' => 'Veuillez uploader une image maximum %s Mo',
+                        ])
+                    ]
+                ]
+            )
             ->add('theme');
         $builder->add('theme', ChoiceType::class, [
             'choices' => ThemesEnum::cases(),

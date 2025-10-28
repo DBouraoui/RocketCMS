@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Rappel client{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Rappel client',
+        subtitle: 'Visualisez les clients qui on besoin de votre appel !'
+    } %}
+
+    <div class="bg-white border border-neutral-200 rounded-2xl shadow-sm p-6 mt-8">
+        <table class="w-full text-left border-collapse">
+            <thead>
+            <tr class="border-b border-neutral-200 text-neutral-600 uppercase text-sm">
+                <th class="py-3 px-4 font-semibold">ID</th>
+                <th class="py-3 px-4 font-semibold">Nom</th>
+                <th class="py-3 px-4 font-semibold">Téléphone</th>
+                <th class="py-3 px-4 font-semibold">Motif</th>
+                <th class="py-3 px-4 font-semibold">Date d’inscription</th>
+                <th class="py-3 px-4 font-semibold text-right">Action</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-neutral-100">
+            {% for reminder in reminders %}
+                <tr class="hover:bg-neutral-50 transition">
+                    <td class="py-3 px-4">{{ reminder.id }}</td>
+                    <td class="py-3 px-4">{{ reminder.name }}</td>
+                    <td class="py-3 px-4 font-medium">{{ reminder.phone }}</td>
+                    <td class="py-3 px-4 font-medium">{{ reminder.reason|u.truncate(20, '...') }}</td>
+                    <td class="py-3 px-4 text-neutral-500 text-sm">
+                        {{ reminder.createdAt|date('d/m/Y à H:i') }}
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                       <div class="flex items-center gap-1 justify-end">
+                        <a href="{{ path('app_admin_reminder_phone_show', {'id': reminder.id}) }}" class="btn btn-xs btn-outline btn-primary join-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-blue-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                            Voir
+                        </a>
+                           {%  include('admin/reminder_phone/_delete_form.html.twig') %}
+                       </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="py-6 text-center text-neutral-400">
+                        Aucun rappel pour le moment.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

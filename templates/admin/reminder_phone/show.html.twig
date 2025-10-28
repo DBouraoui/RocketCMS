@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+
+
+
+{% block title %}Visualisation du rappel{% endblock %}
+
+
+
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Visualiser le rappel',
+        subtitle: 'Détails complets du rappel client'
+    } %}
+
+    <div class="max-w-3xl mx-auto bg-base-100 rounded-2xl shadow-xl p-8 mt-8">
+        <h2 class="text-xl font-semibold mb-6 text-neutral">Informations du rappel</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+            <div>
+                <p class="text-base-content/70 uppercase text-xs mb-1">Identifiant</p>
+                <p class="font-medium text-base-content">{{ reminder.id }}</p>
+            </div>
+
+            <div>
+                <p class="text-base-content/70 uppercase text-xs mb-1">Nom</p>
+                <p class="font-medium text-base-content">{{ reminder.name }}</p>
+            </div>
+
+            <div>
+                <p class="text-base-content/70 uppercase text-xs mb-1">Téléphone</p>
+                <p class="font-medium text-base-content">{{ reminder.phone }}</p>
+            </div>
+
+            <div>
+                <p class="text-base-content/70 uppercase text-xs mb-1">Raison</p>
+                <p class="font-medium text-base-content">{{ reminder.reason }}</p>
+            </div>
+
+            <div class="sm:col-span-2">
+                <p class="text-base-content/70 uppercase text-xs mb-1">Date de création</p>
+                <p class="font-medium text-base-content">
+                    {{ reminder.createdAt|date('d/m/Y à H:i') }}
+                </p>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-10">
+            <a href="{{ path('app_admin_reminder_phone_index') }}"
+               class="btn bg-neutral text-neutral-content hover:bg-neutral-focus transition">
+                ← Retour à la liste
+            </a>
+
+            <div>
+                {% include 'admin/reminder_phone/_delete_form.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

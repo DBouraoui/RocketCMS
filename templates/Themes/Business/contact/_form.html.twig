@@ -70,7 +70,7 @@
 
     <div class="pt-4">
         <button type="submit" class="btn w-full bg-black text-white hover:bg-neutral-800 transition font-semibold py-3 rounded-md">
-            Envoyer
+            {{ contact.button_label|default('Soumettre le formulaire') }}
         </button>
     </div>
 </form>

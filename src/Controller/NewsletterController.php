@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\NewsletterType;
+use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +16,19 @@ final class NewsletterController extends AbstractController
     public function __construct(
         private SettingsService $settingsService,
         private EntityManagerInterface $entityManager,
+        private MenuLinkRepository $menuLinkRepository,
     ){}
 
     #[Route('/newsletter', name: 'app_newsletter')]
     public function index(Request $request): Response
     {
+       $newsletterStructure = $this->menuLinkRepository->findOneBy(['slug' => 'newsletter']);
+
         $form = $this->createForm(NewsletterType::class);
         $form->handleRequest($request);
 
         $honeypot = $request->request->get('newsletter_hp');
+
         if (!empty($honeypot)) {
             // Si le champ est rempli → bot probable
             $this->addFlash('error', 'Une erreur est survenue.');
@@ -44,6 +49,7 @@ final class NewsletterController extends AbstractController
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/newsletter/index.html.twig', [
             'form' => $form,
+            'newsletter' => $newsletterStructure->getContent(),
         ]);
     }
 }

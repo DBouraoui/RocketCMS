@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ContactSubmission;
 use App\Repository\ContactFieldRepository;
+use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,15 +18,19 @@ final class ContactController extends AbstractController
         private SettingsService $settingsService,
         private ContactFieldRepository $contactFieldRepository,
         private EntityManagerInterface $entityManager,
+        private MenuLinkRepository $menuLinkRepository,
     ){}
 
     #[Route('/contact', name: 'app_contact_index', methods: ['GET'])]
     public function index(): Response
     {
+       $contact = $this->menuLinkRepository->findOneBy(['slug'=>'contact']);
+
         $fields = $this->contactFieldRepository->findBy([], ['orderIndex' => 'ASC']);
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/contact/index.html.twig', [
             'fields' => $fields,
+            'contact'=> $contact->getContent()
         ]);
     }
 

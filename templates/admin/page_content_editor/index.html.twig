@@ -9,27 +9,31 @@
         subtitle: 'Modifier le texte de votre page'
     } %}
 
-    <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
-        {{ form_start(form) }}
+    <div class="min-h-screen flex items-start justify-center py-10 px-4 bg-gray-50">
+        <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 text-black">Modifier le contenu</h2>
 
-        {% for child in form %}
-            {% if child.vars.name not in ['save', '_token'] %}
-                <div class="mb-4">
-                    {{ form_label(child, null, {'label_attr': {'class': 'font-semibold'}}) }}
-                    {{ form_widget(child, {'attr': {'class': 'input input-bordered w-full'}}) }}
-                    {% if child.vars.help %}
-                        <small class="text-gray-500">{{ child.vars.help }}</small>
-                    {% endif %}
-                    {{ form_errors(child) }}
-                </div>
-            {% endif %}
-        {% endfor %}
+            {{ form_start(form) }}
 
+            {% for child in form %}
+                {% if child.vars.name not in ['save', '_token'] %}
+                    <div class="mb-6">
+                        {{ form_label(child, null, {'label_attr': {'class': 'block text-black font-semibold mb-1'}}) }}
+                        {{ form_widget(child, {'attr': {'class': 'input input-bordered w-full rounded-md'}}) }}
+                        {% if child.vars.help %}
+                            <p class="text-gray-500 text-sm mt-1">{{ child.vars.help }}</p>
+                        {% endif %}
+                        {{ form_errors(child) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
 
-        <div class="mt-6">
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            <div class="mt-6">
+                {{ form_widget(form.save, {'attr': {'class': 'w-full bg-black text-white font-semibold py-3 rounded-md hover:bg-gray-800 transition'}}) }}
+            </div>
+
+            {{ form_end(form) }}
         </div>
-
-        {{ form_end(form) }}
     </div>
+
 {% endblock %}

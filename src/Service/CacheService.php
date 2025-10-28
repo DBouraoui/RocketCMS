@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\MenuLink;
 use App\Entity\Settings;
+use App\Repository\ContactFieldRepository;
 use App\Repository\MenuLinkRepository;
+use App\Repository\ReminderPhoneRepository;
 use App\Repository\SettingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -18,7 +20,9 @@ class CacheService
         private MenuLinkRepository $menuLinkRepository,
         private TagAwareCacheInterface $cache,
         private SettingsRepository $settingsRepository,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private ContactFieldRepository $contactFieldRepository,
+        private ReminderPhoneRepository $reminderPhoneRepository,
     ){}
 
     public function getMenuLinks(): array
@@ -57,5 +61,31 @@ class CacheService
 
     public function resetSettings() {
         $this->cache->delete('settings');
+    }
+
+    public function getContactFields(): array
+    {
+        return $this->cache->get('contact_fields', function (ItemInterface $item) {
+            $item->expiresAfter(self::ONE_DAY_CACHE);
+
+            return $this->contactFieldRepository->findAll();
+        });
+    }
+
+    public function resetContactFields() {
+        $this->cache->delete('contact_fields');
+    }
+
+    public function getReminderPhone(): array
+    {
+        return $this->cache->get('reminder_phone', function (ItemInterface $item) {
+            $item->expiresAfter(self::ONE_DAY_CACHE);
+
+            return $this->reminderPhoneRepository->findAll();
+        });
+    }
+
+    public function resetReminderPhone() {
+        $this->cache->delete('reminder_phone');
     }
 }

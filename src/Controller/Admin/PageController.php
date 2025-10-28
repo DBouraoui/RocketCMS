@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Entity\ContactSubmission;
 use App\Entity\MenuLink;
 use App\Repository\MenuLinkRepository;
 use App\Service\CacheService;
@@ -22,14 +21,11 @@ class PageController extends AbstractController
     public function __construct(
         private MenuLinkRepository $menuLinkRepository,
         private EntityManagerInterface $entityManager,
-        private CacheService $cacheService,
         private CsrfTokenManagerInterface $csrfTokenManager
     ){}
     #[Route('/admin/page', name: 'app_admin_pages')]
     public function index(): Response
     {
-        $this->menuLinkRepository->findAll();
-
         return $this->render('admin/pages/index.html.twig', [
             'pages' => $this->menuLinkRepository->findAll(),
         ]);
@@ -63,8 +59,6 @@ class PageController extends AbstractController
                 $menuLink->isActive() ? 'activée' : 'désactivée'
             ));
 
-            $this->cacheService->resetMenuLinks();
-
             return $this->redirectToRoute('app_admin_pages');
 
         } catch(\Exception $e) {
@@ -82,9 +76,6 @@ class PageController extends AbstractController
 
             $this->entityManager->flush();
 
-            $this->cacheService->resetMenuLinks();
-
-
             $this->addFlash('success', 'Le menu a été modifié.');
         } else {
             $this->addFlash('danger', 'Token CSRF invalide.');
@@ -101,9 +92,6 @@ class PageController extends AbstractController
             $menuLink->setIsNavbar(!$menuLink->isNavbar());
 
             $this->entityManager->flush();
-
-            $this->cacheService->resetMenuLinks();
-
 
             $this->addFlash('success', 'Le menu a été modifié.');
         } else {

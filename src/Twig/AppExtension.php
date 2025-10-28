@@ -16,12 +16,13 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
 {
     public function __construct(
         private CacheService $cacheService,
+        private MenuLinkRepository $menuLinkRepository,
     ) {}
 
     public function getGlobals(): array
     {
         $settings = $this->cacheService->getSettings();
-        $links = $this->cacheService->getMenuLinks();
+        $links = $this->menuLinkRepository->findAll();
         $date = new \DateTime();
 
         return [

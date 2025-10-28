@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ReminderPhone;
 use App\Repository\ReminderPhoneRepository;
+use App\Service\CacheService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class ReminderPhoneController extends AbstractController
 
     public function __construct(
         private ReminderPhoneRepository $reminderPhoneRepository,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
     ){}
     #[Route('/admin/reminder-phone', name: 'app_admin_reminder_phone_index', methods: ['GET'])]
     public function index(): Response
@@ -34,8 +35,9 @@ class ReminderPhoneController extends AbstractController
         $this->entityManager->remove($reminderPhone);
         $this->entityManager->flush();
 
+
         $this->addFlash('success', 'Le rappel a bien été supprimer');
-        return $this->redirectToRoute('admin_reminder_phone_index');
+        return $this->redirectToRoute('app_admin_reminder_phone_index');
     }
 
     #[Route('/admin/reminder-phone/{id}', name: 'app_admin_reminder_phone_show', methods: ['GET'])]

@@ -1,0 +1,34 @@
+<div class="mt-10 py-4">
+    <h3 class="text-lg font-semibold mb-4 text-base-content/80">
+        Articles similaires
+    </h3>
+
+    {% if similaires is not empty %}
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for post in similaires %}
+                <div class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow duration-200">
+                    {% if post.coverPicture %}
+                        <figure>
+                            <img src="{{ asset(post.coverPicture) }}" alt="{{ post.title }}" class="w-full h-40 object-cover rounded-t-lg">
+                        </figure>
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <h4 class="card-title text-base mb-2">
+                            <a href="{{ path('app_blog_post_show', {'id': post.id}) }}" class="hover:underline">
+                                {{ post.title }}
+                            </a>
+                        </h4>
+                        {% if post.subtitle %}
+                            <p class="text-sm text-base-content/70 line-clamp-2">{{ post.subtitle }}</p>
+                        {% endif %}
+                        <p class="text-xs text-base-content/60 mt-2">
+                            Publié le {{ post.createdAt|date('d/m/Y') }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-base-content/70 italic">Aucun article similaire trouvé.</p>
+    {% endif %}
+</div>

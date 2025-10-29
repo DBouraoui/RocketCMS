@@ -57,12 +57,35 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/blog/{id}',name: 'app_blog_post_show', methods: ['GET'])]
+    #[Route('/blog/{id}', name: 'app_blog_post_show', methods: ['GET'])]
     public function show(BlogPost $blogPost): Response
     {
-        return $this->render('Themes/'.$this->settingsService->getTheme().'/blog/show.html.twig', [
+        // Récupération des tags du post courant (stockés en string séparée par des virgules)
+        $tags = array_map('trim', explode(',', $blogPost->getTags() ?? ''));
+
+        $qb = $this->blogPostRepository->createQueryBuilder('b')
+            ->where('b.id != :id')
+            ->setParameter('id', $blogPost->getId())
+            ->setMaxResults(3) // on limite à 3 articles similaires
+            ->orderBy('b.createdAt', 'DESC');
+
+        // Si le post a des tags, on cherche ceux qui en partagent au moins un
+        if (!empty($tags)) {
+            $orX = $qb->expr()->orX();
+            foreach ($tags as $index => $tag) {
+                $orX->add($qb->expr()->like('b.tags', ':tag' . $index));
+                $qb->setParameter('tag' . $index, '%' . $tag . '%');
+            }
+            $qb->andWhere($orX);
+        }
+
+        $similaires = $qb->getQuery()->getResult();
+
+        return $this->render('Themes/' . $this->settingsService->getTheme() . '/blog/show.html.twig', [
             'post' => $blogPost,
+            'similaires' => $similaires,
         ]);
     }
+
 
 }

@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier l’article — {{ blog_post.title }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Modifier l’article',
+        subtitle: 'Apportez vos changements puis enregistrez-les.'
+    } %}
+
+    <div class="bg-base-100 p-8 rounded-xl shadow-md border border-base-300 mb-8">
+        {{ include('admin/blog_post/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_blog_post_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+
+        {{ include('admin/blog_post/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

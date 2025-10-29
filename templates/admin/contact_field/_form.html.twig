@@ -1,46 +1,47 @@
-<div class="bg-base-100 p-8 rounded-xl shadow-md">
+<div class="bg-white border border-gray-200 rounded-xl p-8 shadow-sm max-w-3xl mx-auto">
     {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
-    <div class="form-control w-full">
-        {{ form_label(form.label, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-        {{ form_widget(form.label, {'attr': {'class': 'input input-bordered w-full'}}) }}
+    <div>
+        {{ form_label(form.label, 'Libellé du champ', {'label_attr': {'class': 'block text-sm font-medium text-gray-800 mb-1'}}) }}
+        {{ form_widget(form.label, {'attr': {'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-black focus:outline-none'}}) }}
         {{ form_errors(form.label) }}
     </div>
 
-    <div class="form-control w-full">
-        {{ form_label(form.name, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-        {{ form_widget(form.name, {'attr': {'class': 'input input-bordered w-full'}}) }}
+    <div>
+        {{ form_label(form.name, 'Nom interne', {'label_attr': {'class': 'block text-sm font-medium text-gray-800 mb-1'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-black focus:outline-none'}}) }}
         {{ form_errors(form.name) }}
     </div>
 
-    <div class="form-control w-full">
-        {{ form_label(form.type, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-        {{ form_widget(form.type, {'attr': {'class': 'select select-bordered w-full'}}) }}
+    <div>
+        {{ form_label(form.type, 'Type de champ', {'label_attr': {'class': 'block text-sm font-medium text-gray-800 mb-1'}}) }}
+        {{ form_widget(form.type, {'attr': {'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:ring-2 focus:ring-black focus:outline-none'}}) }}
         {{ form_errors(form.type) }}
     </div>
 
-    <div class="form-control w-full">
-        {{ form_label(form.options, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-        {{ form_widget(form.options, {'attr': {'class': 'textarea textarea-bordered w-full', 'placeholder': 'Ex: Oui, Non, Peut-être'}}) }}
-        <label class="label text-sm opacity-70">Saisis les options séparées par des virgules</label>
+    <div>
+        {{ form_label(form.options, 'Options (si applicable)', {'label_attr': {'class': 'block text-sm font-medium text-gray-800 mb-1'}}) }}
+        {{ form_widget(form.options, {'attr': {'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 h-24 resize-none focus:ring-2 focus:ring-black focus:outline-none', 'placeholder': 'Ex : Oui, Non, Peut-être'}}) }}
+        <p class="text-xs text-gray-500 mt-1">Saisissez les options séparées par des virgules.</p>
         {{ form_errors(form.options) }}
     </div>
 
-    <div class="form-control w-full flex-row items-center gap-3">
-        {{ form_widget(form.isRequired, {'attr': {'class': 'checkbox checkbox-primary'}}) }}
-        {{ form_label(form.isRequired, null, {'label_attr': {'class': 'font-semibold'}}) }}
+    <div class="flex items-center gap-2">
+        {{ form_widget(form.isRequired, {'attr': {'class': 'h-4 w-4 text-black border-gray-300 rounded focus:ring-black'}}) }}
+        {{ form_label(form.isRequired, 'Champ obligatoire', {'label_attr': {'class': 'text-sm font-medium text-gray-800'}}) }}
         {{ form_errors(form.isRequired) }}
     </div>
 
-    <div class="form-control w-full">
-        {{ form_label(form.orderIndex, null, {'label_attr': {'class': 'label font-semibold'}}) }}
-        {{ form_widget(form.orderIndex, {'attr': {'class': 'input input-bordered w-full', 'min': 1}}) }}
+    <div>
+        {{ form_label(form.orderIndex, 'Ordre d’affichage', {'label_attr': {'class': 'block text-sm font-medium text-gray-800 mb-1'}}) }}
+        {{ form_widget(form.orderIndex, {'attr': {'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-black focus:outline-none', 'min': 1}}) }}
         {{ form_errors(form.orderIndex) }}
     </div>
 
-    <div class="form-control mt-6">
-        <button type="submit" class="btn btn-primary">
-            {{ button_label|default('Enregistrer le champ de formulaire') }}
+    <div class="pt-4">
+        <button type="submit"
+                class="w-full sm:w-auto bg-black text-white px-6 py-2.5 rounded-lg hover:bg-gray-800 transition">
+            {{ button_label|default('Enregistrer le champ') }}
         </button>
     </div>
 

@@ -1,0 +1,101 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ blog_post.title }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: blog_post.title,
+        subtitle: blog_post.subtitle ?? 'Aperçu de l’article'
+    } %}
+
+    <div class="bg-base-100 p-8 rounded-xl shadow-md border border-base-300 mb-8">
+        <dl class="divide-y divide-base-300">
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">ID</dt>
+                <dd class="col-span-2">{{ blog_post.id }}</dd>
+            </div>
+
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">Titre</dt>
+                <dd class="col-span-2">{{ blog_post.title }}</dd>
+            </div>
+
+            {% if blog_post.subtitle %}
+                <div class="py-3 grid grid-cols-3 gap-4">
+                    <dt class="font-semibold text-base-content/70">Sous-titre</dt>
+                    <dd class="col-span-2">{{ blog_post.subtitle }}</dd>
+                </div>
+            {% endif %}
+
+            {% if blog_post.description %}
+                <div class="py-3 grid grid-cols-3 gap-4">
+                    <dt class="font-semibold text-base-content/70">Description</dt>
+                    <dd class="col-span-2">{{ blog_post.description }}</dd>
+                </div>
+            {% endif %}
+
+            {% if blog_post.content %}
+                <div class="py-3 grid grid-cols-3 gap-4">
+                    <dt class="font-semibold text-base-content/70">Contenu</dt>
+                    <dd class="col-span-2 whitespace-pre-line">{{ blog_post.content }}</dd>
+                </div>
+            {% endif %}
+
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">Slug</dt>
+                <dd class="col-span-2">{{ blog_post.slug }}</dd>
+            </div>
+
+            {% if blog_post.coverPicture %}
+                <div class="py-3 grid grid-cols-3 gap-4">
+                    <dt class="font-semibold text-base-content/70">Image de couverture</dt>
+                    <dd class="col-span-2">
+                        <img src="{{ asset(blog_post.coverPicture) }}" alt="{{ blog_post.title }}" class="rounded-lg max-h-64 object-cover">
+                    </dd>
+                </div>
+            {% endif %}
+
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">Nombre de vues</dt>
+                <dd class="col-span-2">{{ blog_post.viewCount ?? 0 }}</dd>
+            </div>
+
+            {% if blog_post.tags %}
+                <div class="py-3 grid grid-cols-3 gap-4">
+                    <dt class="font-semibold text-base-content/70">Tags</dt>
+                    <dd class="col-span-2">
+                        {% for tag in blog_post.tags %}
+                            <span class="badge badge-outline mr-1">{{ tag }}</span>
+                        {% endfor %}
+                    </dd>
+                </div>
+            {% endif %}
+
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">Créé le</dt>
+                <dd class="col-span-2">{{ blog_post.createdAt ? blog_post.createdAt|date('d/m/Y H:i') : '—' }}</dd>
+            </div>
+
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-semibold text-base-content/70">Modifié le</dt>
+                <dd class="col-span-2">{{ blog_post.updatedAt ? blog_post.updatedAt|date('d/m/Y H:i') : '—' }}</dd>
+            </div>
+        </dl>
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_blog_post_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+
+        <div class="flex gap-3">
+            <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-xs btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                </svg>
+                Modifier
+            </a>
+            {{ include('admin/blog_post/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

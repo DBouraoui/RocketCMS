@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Mon blog{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-white text-gray-900 p-8">
+
+        {% include 'admin/components/Header.html.twig' with {
+            title: 'Gestion du blog',
+            subtitle: 'Créez, publiez et gérez vos articles simplement'
+        } %}
+
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold text-base-content">Liste des articles</h2>
+            <a href="{{ path('app_blog_post_new') }}" class="btn btn-primary btn-sm">
+                + Nouvel article
+            </a>
+        </div>
+
+        <div class="overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Titre</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Sous-titre</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Slug</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Vues</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Créé le</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-100 bg-white">
+                {% for blog_post in blog_posts %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-4 py-3 font-medium text-gray-800">{{ blog_post.title }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ blog_post.subtitle ?: '-' }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ blog_post.slug }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ blog_post.viewCount ?: 0 }}</td>
+                        <td class="px-4 py-3 text-gray-600">
+                            {{ blog_post.createdAt ? blog_post.createdAt|date('d/m/Y') : '-' }}
+                        </td>
+                        <td class="px-4 py-3 flex space-x-2">
+                            <div class="flex flex-row items-center justify-end gap-1">
+                                <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-xs btn-outline join-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-black">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                    Voir
+                                </a>
+                                <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-xs btn-primary join-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                    Editer
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-gray-500 py-6">
+                            Aucun article trouvé.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6 text-sm text-gray-500">
+            Vous pouvez gérer ici vos articles, les modifier ou en ajouter de nouveaux à tout moment.
+        </div>
+    </div>
+{% endblock %}
+

@@ -69,6 +69,7 @@ final class BlogPostController extends AbstractController
             $entityManager->persist($blogPost);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre article a bien été créer');
             return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -95,6 +96,7 @@ final class BlogPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre article a bien été modifié');
             return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -112,6 +114,7 @@ final class BlogPostController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('success', 'Votre article a bien été supprimer');
         return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
     }
 }

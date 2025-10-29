@@ -151,7 +151,7 @@ class BlogPost
 
     public function getTags(): ?string
     {
-        return implode(',', $this->tags);
+        return implode(',', $this->tags ?? []);
     }
 
     public function setTags(?string $tags): static

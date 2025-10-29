@@ -7,7 +7,6 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +15,6 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\PositiveOrZero;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class BlogPostType extends AbstractType
 {
@@ -66,6 +63,7 @@ class BlogPostType extends AbstractType
                 'attr' => [
                     'rows' => 10,
                     'placeholder' => 'Écrivez ici le contenu complet...',
+                    'id'=> 'markdown-editor'
                 ],
                 'constraints' => [
                     new NotBlank(['message' => 'Le contenu ne peut pas être vide.']),

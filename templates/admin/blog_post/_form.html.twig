@@ -20,8 +20,13 @@
 
     <div class="md:col-span-2">
         {{ form_label(form.content) }}
-        {{ form_widget(form.content, {'attr': {'class': 'textarea textarea-bordered w-full h-40', 'placeholder': 'Contenu complet de l’article'}}) }}
-        {{ form_errors(form.content) }}
+        {{ form_widget(form.content, {
+            'id': 'markdown-editor',
+            'attr': {
+                'class': 'textarea textarea-bordered w-full h-40',
+                'placeholder': 'Contenu complet en Markdown'
+            }
+        }) }}        {{ form_errors(form.content) }}
     </div>
 
     <div class="md:col-span-2">

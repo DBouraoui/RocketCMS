@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\BlogPost;
 use App\Repository\BlogPostRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
@@ -57,9 +58,11 @@ class BlogController extends AbstractController
     }
 
     #[Route('/blog/{id}',name: 'app_blog_post_show', methods: ['GET'])]
-    public function show(Request $request)
+    public function show(BlogPost $blogPost): Response
     {
-
+        return $this->render('Themes/'.$this->settingsService->getTheme().'/blog/show.html.twig', [
+            'post' => $blogPost,
+        ]);
     }
 
 }

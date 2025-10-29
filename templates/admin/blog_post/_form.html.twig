@@ -24,25 +24,19 @@
         {{ form_errors(form.content) }}
     </div>
 
-    <div>
-        {{ form_label(form.slug) }}
-        {{ form_widget(form.slug, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'ex: mon-premier-article'}}) }}
-        {{ form_errors(form.slug) }}
-    </div>
-
-    <div>
+    <div class="md:col-span-2">
         {{ form_label(form.coverPicture) }}
         {{ form_widget(form.coverPicture, {'attr': {'class': 'input input-bordered w-full'}}) }}
         {{ form_errors(form.coverPicture) }}
     </div>
 
-    <div>
+    <div class="md:col-span-2">
         {{ form_label(form.tags) }}
         {{ form_widget(form.tags, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'ex: Symfony, Angular'}}) }}
         {{ form_errors(form.tags) }}
     </div>
 
-    <div>
+    <div class="md:col-span-2">
         {{ form_label(form.author) }}
         {{ form_widget(form.author, {'attr': {'class': 'select select-bordered w-full'}}) }}
         {{ form_errors(form.author) }}

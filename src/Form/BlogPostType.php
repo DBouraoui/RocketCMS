@@ -71,19 +71,6 @@ class BlogPostType extends AbstractType
                     new NotBlank(['message' => 'Le contenu ne peut pas être vide.']),
                 ],
             ])
-            ->add('slug', TextType::class, [
-                'label' => 'Slug (URL)',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'ex : mon-article-de-blog',
-                ],
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
-                        'message' => 'Le slug ne doit contenir que des lettres minuscules, chiffres et tirets.',
-                    ]),
-                ],
-            ])
             ->add('coverPicture', FileType::class, [
                 'label' => 'Image de couverture',
                 'mapped' => false,

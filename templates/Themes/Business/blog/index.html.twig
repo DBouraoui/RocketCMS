@@ -1,0 +1,103 @@
+{% extends './Themes/Business/base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+
+            <!-- Header minimaliste -->
+            <div class="mb-20">
+                <h1 class="text-6xl font-light tracking-tight mb-4">Consultez tous nos articles</h1>
+                <div class="w-16 h-px bg-black"></div>
+            </div>
+
+            <!-- Barre de recherche & tri -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-16 pb-8 border-b border-gray-200">
+                <form method="get" class="flex w-full md:w-96">
+                    <input type="text" name="q" placeholder="Rechercher..." value="{{ app.request.query.get('q') }}"
+                           class="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:border-black transition">
+                    <button type="submit" class="px-6 py-2 cursor-pointer bg-black text-white hover:bg-gray-800 transition">
+                        Rechercher
+                    </button>
+                </form>
+
+                <div class="flex gap-6 text-sm">
+                    <a href="?sort=date_asc" class="text-gray-600 hover:text-black transition {% if app.request.query.get('sort') == 'date_desc' or not app.request.query.get('sort') %}font-medium text-black{% endif %}">
+                        Récents
+                    </a>
+                    <a href="?sort=date_desc" class="text-gray-600 hover:text-black transition {% if app.request.query.get('sort') == 'date_asc' %}font-medium text-black{% endif %}">
+                        Anciens
+                    </a>
+                </div>
+            </div>
+
+            <!-- Grille des articles -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for post in blog_posts %}
+                    <article class="group flex flex-col h-96">
+                        <a href="{{ path('app_blog_post_show', {'id': post.id}) }}" class="flex flex-col h-full">
+
+                            {% if post.coverPicture %}
+                                <div class="relative overflow-hidden bg-gray-100 aspect-[4/3] mb-6">
+                                    <img src="{{ asset(post.coverPicture) }}"
+                                         alt="{{ post.title }}"
+                                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                                    {% if post.createdAt and post.createdAt|date('U') > (date().timestamp - 604800) %}
+                                        <span class="absolute top-4 left-4 bg-black text-white text-xs px-3 py-1 font-medium tracking-wide">
+                                            NOUVEAU
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <div class="flex flex-col flex-1">
+                                <div class="text-xs text-gray-500 mb-3 tracking-wide">
+                                    {{ post.createdAt ? post.createdAt|date('d.m.Y') : '' }}
+                                </div>
+
+                                <h2 class="text-2xl font-light mb-3 group-hover:translate-x-1 transition-transform duration-300">
+                                    {{ post.title }}
+                                </h2>
+
+                                {% if post.subtitle %}
+                                    <p class="text-base text-gray-600 mb-4 font-light">
+                                        {{ post.subtitle|u.truncate(60, '...') }}
+                                    </p>
+                                {% endif %}
+
+                                <p class="text-sm text-gray-500 leading-relaxed mb-6 flex-1">
+                                    {{ post.description|default(post.content|striptags|slice(0, 120) ~ '...') }}
+                                </p>
+
+                                {% if post.tags %}
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        {% for tag in post.tags %}
+                                            <span class="text-xs text-gray-400 tracking-wider uppercase">
+                                                {{ tag }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                <div class="mt-auto pt-4 border-t border-gray-100 text-sm group-hover:translate-x-1 transition-transform duration-300">
+                                    <span class="inline-flex items-center gap-2">
+                                        Lire l'article
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                {% else %}
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-gray-400 text-lg font-light">Aucun article disponible</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

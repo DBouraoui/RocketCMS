@@ -154,9 +154,9 @@ class BlogPost
         return $this->tags;
     }
 
-    public function setTags(?array $tags): static
+    public function setTags(?string $tags): static
     {
-        $this->tags = $tags;
+        $this->tags = explode(',', $tags);
 
         return $this;
     }

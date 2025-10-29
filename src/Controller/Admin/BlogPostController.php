@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/blog/post')]
 final class BlogPostController extends AbstractController
 {
-    #[Route(name: 'app_blog_post_index', methods: ['GET'])]
+    #[Route(name: 'app_admin_blog_post_index', methods: ['GET'])]
     public function index(BlogPostRepository $blogPostRepository): Response
     {
         return $this->render('admin/blog_post/index.html.twig', [
@@ -22,7 +22,7 @@ final class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_blog_post_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_admin_blog_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $blogPost = new BlogPost();
@@ -33,7 +33,7 @@ final class BlogPostController extends AbstractController
             $entityManager->persist($blogPost);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_blog_post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/blog_post/new.html.twig', [
@@ -42,7 +42,7 @@ final class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_blog_post_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_admin_blog_post_show', methods: ['GET'])]
     public function show(BlogPost $blogPost): Response
     {
         return $this->render('admin/blog_post/show.html.twig', [
@@ -50,7 +50,7 @@ final class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_blog_post_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_admin_blog_post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, BlogPost $blogPost, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(BlogPostType::class, $blogPost);
@@ -59,7 +59,7 @@ final class BlogPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_blog_post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/blog_post/edit.html.twig', [
@@ -68,7 +68,7 @@ final class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_blog_post_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_admin_blog_post_delete', methods: ['POST'])]
     public function delete(Request $request, BlogPost $blogPost, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$blogPost->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class BlogPostController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_blog_post_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
     }
 }

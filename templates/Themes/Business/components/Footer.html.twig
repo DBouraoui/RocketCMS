@@ -13,7 +13,7 @@
             <h4 class="text-lg font-semibold mb-4">Liens</h4>
             <ul class="space-y-2 text-gray-700 text-sm">
                 {% for link in links %}
-                    {% if link.isFooter %}
+                    {% if link.isFooter and link.isActive %}
                 <li><a href="{{ link.url }}" class="hover:text-gray-900 transition">{{ link.title }}</a></li>
                     {%  endif %}
                 {% endfor %}

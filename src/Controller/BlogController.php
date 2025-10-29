@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\BlogPostRepository;
+use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +17,17 @@ class BlogController extends AbstractController
     public function __construct(
         private SettingsService $settingsService,
         private BlogPostRepository $blogPostRepository,
+        private MenuLinkRepository $menuLinkRepository,
     ){}
     #[Route('/blog',name: 'app_blog_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
+        $blogPage = $this->menuLinkRepository->findOneBy(['url'=>'blog']);
+        if (!$blogPage->isActive())
+        {
+            return $this->redirectToRoute('app_home');
+        }
+
         // Récupérer la query de recherche
         $search = $request->query->get('q', '');
 

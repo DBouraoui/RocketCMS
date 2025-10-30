@@ -1,0 +1,72 @@
+{{ form_start(form, {
+    'attr': {
+        'novalidate': 'novalidate',
+        'enctype': 'multipart/form-data',
+        'data-controller': 'media-library'
+    }
+}) }}
+
+<div class="card bg-base-100 shadow-xl p-8 space-y-8">
+    <h2 class="text-lg font-semibold mb-4 text-base-content/80">
+        🖼️ Informations sur le média
+    </h2>
+
+    <p class="text-sm text-base-content/60 mb-6">
+        Remplissez les champs ci-dessous pour ajouter ou modifier un élément de votre médiathèque.
+        Vous pouvez télécharger une image, définir un titre et une courte description.
+    </p>
+
+    <div class="form-control">
+        {{ form_label(form.picture, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+
+            <div class="w-full sm:w-2/3">
+                {{ form_widget(form.picture, {'attr': {
+                    'class': 'file-input file-input-bordered w-full',
+                    'data-action': 'change->media-library#preview'
+                }}) }}
+                {{ form_errors(form.picture) }}
+            </div>
+
+            {# 🖼️ Si une image existe déjà, on l'affiche ici #}
+            {% if media_library is defined and media_library.picture %}
+                <div class="w-32 h-32 border border-base-300 rounded-lg overflow-hidden shadow-inner relative group">
+                    <img src="{{ asset(media_library.picture) }}"
+                         alt="Image actuelle"
+                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs">
+                        Image actuelle
+                    </div>
+                </div>
+            {% else %}
+                <div id="preview-container"
+                     class="hidden w-32 h-32 border border-base-300 rounded-lg overflow-hidden shadow-inner">
+                    <img id="preview-image"
+                         src=""
+                         alt="Aperçu de l’image"
+                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.title, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'input input-bordered w-full'}}) }}
+        {{ form_errors(form.title) }}
+    </div>
+
+    <div class="form-control">
+        {{ form_label(form.description, null, {'label_attr': {'class': 'label font-semibold'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'textarea textarea-bordered w-full h-40'}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="flex justify-end pt-4">
+        <button type="submit" class="btn btn-primary px-8">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}

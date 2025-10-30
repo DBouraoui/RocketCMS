@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détail du média — {{ media_library.title }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: media_library.title,
+        subtitle: 'Détails du média ajouté dans votre bibliothèque.'
+    } %}
+
+    <div class="bg-base-100 p-8 rounded-xl shadow-md border border-base-300 mb-8">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+            {% if media_library.picture %}
+                <div class="w-full md:w-1/3">
+                    <img src="{{ asset(media_library.picture) }}" alt="{{ media_library.title }}" class="rounded-lg shadow-md border border-base-300 object-cover w-full max-h-80">
+                </div>
+            {% endif %}
+
+            <div class="flex-1 space-y-4">
+                <div>
+                    <h2 class="text-lg font-semibold text-base-content/80">Titre</h2>
+                    <p class="text-base-content">{{ media_library.title }}</p>
+                </div>
+
+                {% if media_library.description %}
+                    <div>
+                        <h2 class="text-lg font-semibold text-base-content/80">Description</h2>
+                        <p class="text-base-content/90 whitespace-pre-line">{{ media_library.description }}</p>
+                    </div>
+                {% endif %}
+
+                <div>
+                    <h2 class="text-lg font-semibold text-base-content/80">Ajouté le</h2>
+                    <p class="text-base-content/70">{{ media_library.createdAt ? media_library.createdAt|date('d/m/Y H:i') : '—' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_admin_media_library_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+
+        <div class="flex gap-3">
+            <a href="{{ path('app_admin_media_library_edit', {'id': media_library.id}) }}" class="btn btn-primary btn-xs">
+                ✏️ Modifier
+            </a>
+            {{ include('admin/media_library/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvel élément — Médiathèque{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Nouvel élément de la médiathèque',
+        subtitle: 'Ajoutez facilement une image, un titre et une description à votre médiathèque.'
+    } %}
+
+    <div class=" p-8  mb-8">
+
+        {{ include('admin/media_library/_form.html.twig', {'button_label': 'Ajouter'}) }}
+    </div>
+
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_admin_media_library_index') }}" class="btn btn-outline">
+            ← Retour à la liste
+        </a>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 import './bootstrap.js';
 
-import toast_controller from "./controllers/toast_controller";
 
 import './styles/app.css';
+import 'easymde/dist/easymde.min.css';

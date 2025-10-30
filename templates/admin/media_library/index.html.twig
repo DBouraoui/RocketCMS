@@ -1,0 +1,63 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Médiathèque{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Ma médiathèque',
+        subtitle: 'Visualisez, modifiez ou supprimez vos médias.'
+    } %}
+
+    <div class="bg-base-100 p-8 rounded-xl shadow-md border border-base-300 mb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-semibold text-base-content/80">
+                🗂️ Liste des médias enregistrés
+            </h2>
+            <a href="{{ path('app_admin_media_library_new') }}" class="btn btn-primary btn-sm">
+                + Ajouter un média
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                <tr class="text-sm text-base-content/70">
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Ajouté le</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for media_library in media_libraries %}
+                    <tr class="hover:bg-base-200 transition">
+                        <td class="font-semibold">{{ media_library.id }}</td>
+                        <td>
+                            {% if media_library.picture %}
+                                <img src="{{ asset(media_library.picture) }}" alt="{{ media_library.title }}" class="w-16 h-16 rounded-lg object-cover border border-base-300">
+                            {% else %}
+                                <span class="text-base-content/50 italic">Aucune image</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ media_library.title }}</td>
+                        <td class="max-w-xs truncate" title="{{ media_library.description }}">{{ media_library.description }}</td>
+                        <td>{{ media_library.createdAt ? media_library.createdAt|date('d/m/Y H:i') : '—' }}</td>
+                        <td class="text-right space-x-2">
+                            <a href="{{ path('app_admin_media_library_show', {'id': media_library.id}) }}" class="btn btn-xs btn-outline">Voir</a>
+                            <a href="{{ path('app_admin_media_library_edit', {'id': media_library.id}) }}" class="btn btn-xs btn-primary">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-base-content/50 italic py-6">
+                            Aucun média n’a encore été ajouté.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -21,10 +21,11 @@
     <div class="md:col-span-2">
         {{ form_label(form.content) }}
         {{ form_widget(form.content, {
-            'id': 'markdown-editor',
             'attr': {
+            'id': 'markdown-editor',
                 'class': 'textarea textarea-bordered w-full h-40',
-                'placeholder': 'Contenu complet en Markdown'
+                'placeholder': 'Contenu complet en Markdown',
+                'data-controller': 'markdown-editor'
             }
         }) }}        {{ form_errors(form.content) }}
     </div>

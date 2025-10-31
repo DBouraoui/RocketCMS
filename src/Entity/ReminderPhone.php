@@ -16,19 +16,15 @@ class ReminderPhone
     private ?int $id = null;
 
     #[ORM\Column(length: 15, nullable: true)]
-    #[Length(exactly: 10, exactMessage: 'Le numéro de téléphone doit être composer de 10 chiffres')]
-    #[Regex('/^(0[67](?:\d{2}[- ]?){4})$/', message: 'Veuillez saisir un numéro de téléphone valide')]
     private ?string $phone = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 40, nullable: true)]
-    #[Length(min: 1, max: 40, minMessage: 'Le nom ne peut être de moins d\'un carctères', maxMessage: 'Le nom est invalide')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Length(min: 1, max: 255, minMessage: 'La raison ne peut être de moins d\'un carctères', maxMessage: 'Le nom est invalide')]
     private ?string $reason = null;
 
     public function getId(): ?int

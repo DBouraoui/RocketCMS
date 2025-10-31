@@ -7,6 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterType extends AbstractType
 {
@@ -15,6 +18,11 @@ class NewsletterType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Votre adresse email',
+                'constraints' => [
+                    new NotBlank(message: 'Votre adresse email n\'est pas valide'),
+                    new Length(['max' => 255], maxMessage: "Votre adresse email n\'est pas valide",),
+                    new Email(message: 'Votre adresse email n\'est pas valide')
+                ]
             ])
         ;
     }

@@ -15,7 +15,6 @@ class Newsletter
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Email(message: 'L\'adresse email n\'est pas valide')]
     private ?string $email = null;
 
     #[ORM\Column]

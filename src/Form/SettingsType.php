@@ -12,17 +12,59 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class SettingsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, ['required' => true, 'label' => 'Titre du site web'])
-            ->add('description',TextType::class, ['required' => true, 'label' => 'Description du site web'])
-            ->add('contactEmail',EmailType::class, ['required' => true, 'label' => 'Email de contact'])
-            ->add('contactPhone',TextType::class, ['required' => true, 'label' => 'Numéro de téléphone de contact'])
+            ->add('title',
+                TextType::class,
+                [
+                    'required' => true,
+                    'label' => 'Titre du site web',
+                    'constraints' => [
+                        new NotBlank(message: 'Le titre est obligatoire'),
+                        new Length(['max' => 30], maxMessage: 'Le titre ne peut dépasser 30 caractères'),
+                    ],
+                ])
+            ->add('description',
+                TextType::class,
+                [
+                    'required' => true,
+                    'label' => 'Description du site web',
+                    'constraints' => [
+                        new NotBlank(message: 'La description ne doit pas être vide'),
+                        new Length(['max'=>255], maxMessage: 'La description n\'est pas valide'),
+                    ]
+                ])
+            ->add('contactEmail',
+                EmailType::class,
+                [
+                    'required' => true,
+                    'label' => 'Email de contact',
+                    'constraints' => [
+                        new NotBlank(message: "Vous devez entrer une adresse email valide"),
+                        new Length(['max' => 255], maxMessage: "Vous devez entrer une adresse email valide"),
+                        new Email(message: "Votre email n'est pas valide"),
+                    ]
+                ])
+            ->add('contactPhone',
+                TextType::class,
+                [
+                    'required' => true,
+                    'label' => 'Numéro de téléphone de contact',
+                    'constraints' => [
+                        new NotBlank(message: 'Votre numéro de téléphone n\'est pas valide'),
+                        new Regex('/^(0[467](?:\d{2}[- ]?){4})$/', message: 'Veuillez saisir un numéro de téléphone valide')
+                    ]
+                ],
+            )
             ->add('logo', FileType::class,
                 [
                     'required' => false,

@@ -1,7 +1,13 @@
 <nav class="w-screen h-14 border-b border-gray-200 shadow-black shadow-xl px-2">
         <section class="w-full h-full flex items-center justify-between">
             <div>
-                <a href="/" class="font-bold text-md capitalize">{{ settings.title|default('Myrocket') }}</a>
+                {% if settings.logo %}
+                    <a href="{{ path('app_home_index') }}">
+                        <img class="ml-4" src="{{ settings.logo }}" height="32" width="32" alt="{{ settings.title|default('Mon logo') }} Logo" />
+                    </a>
+                {% else %}
+                <a href="{{ path('app_home_index') }}" class="font-bold text-md capitalize">{{ settings.title|default('Myrocket') }}</a>
+                {% endif %}
             </div>
             <div class="flex flex-row items-center gap-4 -translate-x-12 max-md:hidden">
                 {% for link in links %}
@@ -29,7 +35,11 @@
                                 <!-- Bloc context / info en haut -->
                                 <li class="mb-6">
                                     <div class="p-4 text-center">
+                                        {% if settings.logo %}
+                                        <img class="ml-4" src="{{ settings.logo }}" height="32" width="32" alt="{{ settings.title|default('Mon logo') }} Logo" />
+                                        {% else %}
                                         <h4 class="font-bold text-lg mb-2">{{ settings.title|default('') }}</h4>
+                                        {% endif %}
                                     </div>
                                 </li>
 
@@ -37,7 +47,7 @@
                                 <div class="flex-grow">
                                     {% for link in links %}
                                         <li>
-                                            <a class="hover:text-blue-500" href="{{ link.url }}">{{ link.title }}</a>
+                                            <a class="hover:text-blue-500" href="{{ path(link.url) }}">{{ link.title }}</a>
                                         </li>
                                     {% endfor %}
                                 </div>

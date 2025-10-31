@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 final class NewsletterController extends AbstractController
 {
@@ -38,6 +40,7 @@ final class NewsletterController extends AbstractController
             $this->addFlash('error', 'Une erreur est survenue.');
             return $this->redirectToRoute('app_newsletter_index');
         }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\BlogPost;
+use App\Event\ContentViewEvent;
 use App\Repository\BlogPostRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,11 +21,13 @@ class BlogController extends AbstractController
         private SettingsService $settingsService,
         private BlogPostRepository $blogPostRepository,
         private MenuLinkRepository $menuLinkRepository,
+        private EventDispatcherInterface $eventDispatcher
     ){}
     #[Route('/blog',name: 'app_blog_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
         $blogPage = $this->menuLinkRepository->findOneBy(['slug'=>'mon-blog']);
+
         if (!$blogPage->isActive())
         {
             return $this->redirectToRoute('app_home_index');
@@ -58,7 +62,7 @@ class BlogController extends AbstractController
     }
 
     #[Route('/blog/{id}', name: 'app_blog_post_show', methods: ['GET'])]
-    public function show(BlogPost $blogPost): Response
+    public function show(BlogPost $blogPost, Request $request): Response
     {
         // Récupération des tags du post courant (stockés en string séparée par des virgules)
         $tags = array_map('trim', explode(',', $blogPost->getTags() ?? ''));
@@ -80,6 +84,17 @@ class BlogController extends AbstractController
         }
 
         $similaires = $qb->getQuery()->getResult();
+
+        $session = $request->getSession();
+        $viewedPosts = $session->get('viewed_posts', []);
+
+        if (!in_array($blogPost->getId(), $viewedPosts, true)) {
+            $this->eventDispatcher->dispatch(new ContentViewEvent($blogPost), ContentViewEvent::NAME);
+            $viewedPosts[] = $blogPost->getId();
+            $session->set('viewed_posts', $viewedPosts);
+        }
+
+
 
         return $this->render('Themes/' . $this->settingsService->getTheme() . '/blog/show.html.twig', [
             'post' => $blogPost,

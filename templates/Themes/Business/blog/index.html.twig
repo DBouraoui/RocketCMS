@@ -54,6 +54,7 @@
                             <div class="flex flex-col flex-1">
                                 <div class="text-xs text-gray-500 mb-3 tracking-wide">
                                     {{ post.createdAt ? post.createdAt|date('d.m.Y') : '' }}
+                                    | {{ post.viewCount ?? "0" }} vue
                                 </div>
 
                                 <h2 class="text-2xl font-light mb-3 group-hover:translate-x-1 transition-transform duration-300">

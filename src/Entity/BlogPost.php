@@ -184,4 +184,10 @@ class BlogPost
 
         return $this;
     }
+
+    public function incrementView(): ?int
+    {
+        return $this->viewCount++;
+
+    }
 }

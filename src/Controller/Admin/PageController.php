@@ -38,7 +38,7 @@ class PageController extends AbstractController
 
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             $this->addFlash('error', 'Token CSRF invalide');
-            return $this->redirectToRoute('app_admin_pages');
+            return $this->redirectToRoute('app_admin_pages_index');
         }
 
         try {
@@ -59,11 +59,11 @@ class PageController extends AbstractController
                 $menuLink->isActive() ? 'activée' : 'désactivée'
             ));
 
-            return $this->redirectToRoute('app_admin_pages');
+            return $this->redirectToRoute('app_admin_pages_index');
 
         } catch(\Exception $e) {
             $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('app_admin_pages');
+            return $this->redirectToRoute('app_admin_pages_index');
         }
     }
 
@@ -81,7 +81,7 @@ class PageController extends AbstractController
             $this->addFlash('danger', 'Token CSRF invalide.');
         }
 
-        return $this->redirectToRoute('app_admin_pages');
+        return $this->redirectToRoute('app_admin_pages_index');
     }
 
     #[Route('/admin/page/{id}/navbar', name: 'app_admin_page_update_navbar', methods: ['POST'])]
@@ -98,7 +98,7 @@ class PageController extends AbstractController
             $this->addFlash('danger', 'Token CSRF invalide.');
         }
 
-        return $this->redirectToRoute('app_admin_pages');
+        return $this->redirectToRoute('app_admin_pages_index');
     }
 
 }

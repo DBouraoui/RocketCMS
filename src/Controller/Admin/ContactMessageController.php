@@ -17,7 +17,7 @@ final class ContactMessageController extends AbstractController
         private EntityManagerInterface $entityManager
     ){}
 
-    #[Route('/admin/contact/message', name: 'app_contact_message_index', methods: ['GET'])]
+    #[Route('/admin/contact/message', name: 'app_admin_contact_message_index', methods: ['GET'])]
     public function index(): Response
     {
        $contacts= $this->contactSubmissionRepository->findAll();
@@ -28,7 +28,7 @@ final class ContactMessageController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/contact/message/{id}', name: 'app_contact_message_delete', methods: ['POST'])]
+    #[Route('/admin/contact/message/{id}', name: 'app_admin_contact_message_delete', methods: ['POST'])]
     public function delete(ContactSubmission $contactSubmission, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contactSubmission->getId(), $request->getPayload()->getString('_token'))) {
@@ -38,10 +38,10 @@ final class ContactMessageController extends AbstractController
 
         }
 
-        return $this->redirectToRoute('app_contact_message_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_contact_message_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/admin/contact/message/{id}', name: 'app_contact_message_show', methods: ['GET'])]
+    #[Route('/admin/contact/message/{id}', name: 'app_admin_contact_message_show', methods: ['GET'])]
     public function show(ContactSubmission $contactSubmission): Response
     {
 

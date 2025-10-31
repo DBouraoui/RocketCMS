@@ -27,7 +27,7 @@
                         {{ newsletter.createdAt|date('d/m/Y à H:i') }}
                     </td>
                     <td class="py-3 px-4 text-right">
-                        <form method="post" action="{{ path('app_newsletter_delete', {id: newsletter.id}) }}" onsubmit="return confirm('Supprimer cette inscription ?');">
+                        <form method="post" action="{{ path('app_admin_newsletter_delete', {id: newsletter.id}) }}" onsubmit="return confirm('Supprimer cette inscription ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ newsletter.id) }}">
                             <button type="submit" class="text-white bg-black hover:bg-neutral-800 transition px-3 py-1.5 rounded-md text-sm font-semibold">
                                 Supprimer

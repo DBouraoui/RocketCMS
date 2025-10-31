@@ -23,10 +23,10 @@ class BlogController extends AbstractController
     #[Route('/blog',name: 'app_blog_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $blogPage = $this->menuLinkRepository->findOneBy(['url'=>'blog']);
+        $blogPage = $this->menuLinkRepository->findOneBy(['slug'=>'mon-blog']);
         if (!$blogPage->isActive())
         {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
 
         // Récupérer la query de recherche

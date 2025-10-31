@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\ContactSubmission;
-use App\Repository\ContactFieldRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\CacheService;
 use App\Service\SettingsService;
@@ -28,7 +27,7 @@ final class ContactController extends AbstractController
        $contact = $this->menuLinkRepository->findOneBy(['slug'=>'contact']);
 
        if (!$contact->isActive()) {
-           return $this->redirectToRoute('app_home');
+           return $this->redirectToRoute('app_home_index');
        }
 
         $fields = $this->cacheService->getContactFields();

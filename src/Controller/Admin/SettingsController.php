@@ -21,7 +21,7 @@ class SettingsController extends AbstractController
         private CacheService $cacheService,
         private EntityManagerInterface $entityManager
     ){}
-    #[Route('/admin/settings', name: 'app_admin_settings')]
+    #[Route('/admin/settings', name: 'app_admin_settings_index', methods: ['GET'])]
     public function settings(Request $request): Response
     {
         $settings = $this->settingsRepository->find(1);

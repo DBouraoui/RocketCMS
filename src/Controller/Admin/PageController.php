@@ -23,7 +23,7 @@ class PageController extends AbstractController
         private EntityManagerInterface $entityManager,
         private CsrfTokenManagerInterface $csrfTokenManager
     ){}
-    #[Route('/admin/page', name: 'app_admin_pages')]
+    #[Route('/admin/page', name: 'app_admin_pages_index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render('admin/pages/index.html.twig', [

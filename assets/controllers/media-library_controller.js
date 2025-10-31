@@ -2,7 +2,6 @@ import {Controller} from "@hotwired/stimulus";
 
 export default class extends Controller {
     connect() {
-        console.log("media library charged")
         const fileInput = document.querySelector('input[type="file"]');
         const previewContainer = document.getElementById('preview-container');
         const previewImage = document.getElementById('preview-image');

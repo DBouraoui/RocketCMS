@@ -19,13 +19,13 @@ final class NewsletterController extends AbstractController
         private MenuLinkRepository $menuLinkRepository,
     ){}
 
-    #[Route('/newsletter', name: 'app_newsletter')]
+    #[Route('/newsletter', name: 'app_newsletter_index', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
        $newsletterStructure = $this->menuLinkRepository->findOneBy(['slug' => 'newsletter']);
 
        if (!$newsletterStructure->isActive()) {
-           return $this->redirectToRoute('app_home');
+           return $this->redirectToRoute('app_home_index');
        }
 
         $form = $this->createForm(NewsletterType::class);
@@ -36,7 +36,7 @@ final class NewsletterController extends AbstractController
         if (!empty($honeypot)) {
             // Si le champ est rempli → bot probable
             $this->addFlash('error', 'Une erreur est survenue.');
-            return $this->redirectToRoute('app_newsletter');
+            return $this->redirectToRoute('app_newsletter_index');
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +48,7 @@ final class NewsletterController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Inscription à la newsletter avec succés');
-            return $this->redirectToRoute('app_newsletter');
+            return $this->redirectToRoute('app_newsletter_index');
         }
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/newsletter/index.html.twig', [

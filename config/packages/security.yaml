@@ -27,7 +27,7 @@ security:
                 lifetime: 604800 # 1 week in seconds
             logout:
                 path: app_logout
-                target: app_home
+                target: app_home_index
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

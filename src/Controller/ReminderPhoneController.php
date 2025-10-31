@@ -26,7 +26,7 @@ final class ReminderPhoneController extends AbstractController
         $reminderPhone = $this->menuLinkRepository->findOneBy(['slug' => 'reminder-phone']);
 
         if (!$reminderPhone->isActive()) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
 
         $form = $this->createForm(ReminderPhoneType::class);

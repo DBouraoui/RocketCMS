@@ -19,7 +19,7 @@ final class ContactFieldController extends AbstractController
         private CacheService $cacheService,
     ){}
 
-    #[Route(name: 'app_contact_field_index', methods: ['GET'])]
+    #[Route(name: 'app_admin_contact_field_index', methods: ['GET'])]
     public function index(ContactFieldRepository $contactFieldRepository): Response
     {
         return $this->render('admin/contact_field/index.html.twig', [
@@ -27,7 +27,7 @@ final class ContactFieldController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_contact_field_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_admin_contact_field_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $contactField = new ContactField();
@@ -49,7 +49,7 @@ final class ContactFieldController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_contact_field_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_admin_contact_field_show', methods: ['GET'])]
     public function show(ContactField $contactField): Response
     {
         return $this->render('admin/contact_field/show.html.twig', [
@@ -57,7 +57,7 @@ final class ContactFieldController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_contact_field_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_admin_contact_field_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ContactField $contactField, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ContactFieldType::class, $contactField);
@@ -79,7 +79,7 @@ final class ContactFieldController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_contact_field_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_admin_contact_field_delete', methods: ['POST'])]
     public function delete(Request $request, ContactField $contactField, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contactField->getId(), $request->getPayload()->getString('_token'))) {

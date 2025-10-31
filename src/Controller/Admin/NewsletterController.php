@@ -18,7 +18,7 @@ class NewsletterController extends AbstractController
         private NewsletterRepository $newsletterRepository,
         private EntityManagerInterface $entityManager
     ){}
-    #[Route('/admin/newsletter', name: 'app_newsletter_index', methods: ['GET'])]
+    #[Route('/admin/newsletter', name: 'app_admin_newsletter_index', methods: ['GET'])]
     public function index(): Response
     {
         $this->newsletterRepository->findAll();
@@ -28,13 +28,13 @@ class NewsletterController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/newsletter{id}', name: 'app_newsletter_delete', methods: ['POST'])]
+    #[Route('/admin/newsletter{id}', name: 'app_admin_newsletter_delete', methods: ['POST'])]
     public function delete(Newsletter $newsletter): Response
     {
         $this->entityManager->remove($newsletter);
         $this->entityManager->flush();
 
         $this->addFlash('success', 'Le client a été suprimer avec succés.');
-        return $this->redirectToRoute('app_newsletter_index');
+        return $this->redirectToRoute('app_admin_newsletter_index');
     }
 }

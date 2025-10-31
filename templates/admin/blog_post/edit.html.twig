@@ -2,41 +2,6 @@
 
 {% block title %}Modifier l’article — {{ blog_post.title }}{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        function initMarkdownEditor() {
-            const textarea = document.getElementById("markdown-editor");
-            if (textarea && !textarea.classList.contains('mde-initialized')) {
-                new EasyMDE({
-                    element: textarea,
-                    spellChecker: false,
-                    placeholder: "Rédige ton contenu ici en Markdown...",
-                    toolbar: [
-                        "bold", "italic", "heading", "|",
-                        "quote", "unordered-list", "ordered-list", "|",
-                        "link", "image", "|",
-                        "preview", "side-by-side", "fullscreen", "|",
-                        "guide"
-                    ],
-                    autosave: {
-                        enabled: true,
-                        uniqueId: "blog_content_autosave",
-                        delay: 1000,
-                    },
-                    status: ["lines", "words"]
-                });
-                textarea.classList.add('mde-initialized');
-            }
-        }
-
-        // Compatibilité Turbo/Hotwire/Stimulus
-        document.addEventListener("turbo:load", initMarkdownEditor);
-        document.addEventListener("DOMContentLoaded", initMarkdownEditor);
-    </script>
-{% endblock %}
-
-
 {% block body %}
     {% include 'admin/components/Header.html.twig' with {
         title: 'Modifier l’article',

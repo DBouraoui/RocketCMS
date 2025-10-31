@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class MediaLibraryType extends AbstractType
 {
@@ -17,16 +19,27 @@ class MediaLibraryType extends AbstractType
         $builder
             ->add('picture', FileType::class, [
                 'label' => 'Image',
-                'required' => false,
+                'required' => true,
                 'mapped' => false,
+                'constraints' => [
+                    new NotNull(message: 'L\'image est obligatoire'),
+                ]
             ])
             ->add('title', TextType::class, [
                 'label' => 'Titre',
                 'attr' => ['placeholder' => 'Titre de l’image'],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(message: 'Le titre est obligatoire'),
+                    new Length(['max' => 255], maxMessage: 'Le titre ne peut dépasser {{ limit }} caractères')
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
+                'constraints' => [
+                  new Length(['max'=>500], maxMessage: 'La description ne peut dépasser {{ limit}} caractères')
+                ],
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => 'Brève description ou contexte de l’image',

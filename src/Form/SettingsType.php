@@ -113,6 +113,9 @@ class SettingsType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Settings::class,
             'is_admin' => false,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'settings_item',
         ]);
     }
 }

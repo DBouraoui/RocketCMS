@@ -25,11 +25,17 @@ class SettingsController extends AbstractController
     public function settings(Request $request): Response
     {
         $settings = $this->settingsRepository->find(1);
+
         $form = $this->createForm(SettingsType::class, $settings, [
             'is_admin' => $this->isGranted('ROLE_SUPER_ADMIN')
         ]);
 
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'Une erreur est survenue lors de la validation du formulaire');
+            return $this->redirectToRoute('app_admin_settings_index');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile|null $logoFile */
@@ -56,7 +62,7 @@ class SettingsController extends AbstractController
             $this->cacheService->resetSettings();
 
             $this->addFlash('success', 'Paramètres enregistrés !');
-            return $this->redirectToRoute('app_admin_settings');
+            return $this->redirectToRoute('app_admin_settings_index');
         }
 
         return $this->render('admin/settings/index.html.twig', [

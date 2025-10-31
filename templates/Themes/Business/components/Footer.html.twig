@@ -2,9 +2,9 @@
     <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
         <!-- Branding -->
         <div>
-            <h3 class="text-2xl font-bold mb-4">{{ settings.title }}</h3>
+            <h3 class="text-2xl font-bold mb-4">{{ settings.title|default('') }}</h3>
             <p class="text-gray-700 text-sm">
-                {{ settings.description }}
+                {{ settings.description|default('') }}
             </p>
         </div>
 
@@ -23,8 +23,8 @@
         <!-- Contact -->
         <div>
             <h4 class="text-lg font-semibold mb-4">Contact</h4>
-            <p class="text-gray-700 text-sm mb-2">{{settings.contactEmail}}</p>
-            <p class="text-gray-700 text-sm mb-4">{{ settings.contactPhone }}</p>
+            <p class="text-gray-700 text-sm mb-2">{{settings.contactEmail|default('')}}</p>
+            <p class="text-gray-700 text-sm mb-4">{{ settings.contactPhone|default('') }}</p>
             <div class="flex gap-4 mt-2">
                 <a href="#" class="text-gray-700 hover:text-gray-900 transition">LinkedIn</a>
                 <a href="#" class="text-gray-700 hover:text-gray-900 transition">Twitter</a>
@@ -34,6 +34,6 @@
     </div>
 
     <div class="text-center text-gray-500 text-sm mt-12">
-        &copy; {{ date|date('Y')}} {{ settings.title }}. Tous droits réservés.
+        &copy; {{ date|date('Y')}} {{ settings.title|default('') }}. Tous droits réservés.
     </div>
 </footer>

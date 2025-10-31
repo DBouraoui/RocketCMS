@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 final class ContactController extends AbstractController
 {
@@ -18,7 +20,8 @@ final class ContactController extends AbstractController
         private SettingsService $settingsService,
         private EntityManagerInterface $entityManager,
         private MenuLinkRepository $menuLinkRepository,
-        private CacheService $cacheService
+        private CacheService $cacheService,
+        private CsrfTokenManagerInterface $csrfTokenManager
     ){}
 
     #[Route('/contact', name: 'app_contact_index', methods: ['GET'])]
@@ -41,14 +44,14 @@ final class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact_post', methods: ['POST'])]
     public function insertContact(Request $request): Response
     {
-        // Vérification CSRF
-        $submittedToken = $request->request->get('_csrf_token');
-        if (!$this->isCsrfTokenValid('contact_form', $submittedToken)) {
-            $this->addFlash('error', 'Token CSRF invalide.');
+        $honeypot = $request->request->get('contact_hp');
+
+        $token = new CsrfToken('contact_field', $request->request->get('_token'));
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            $this->addFlash('error', 'Le formulaire est invalide.');
             return $this->redirectToRoute('app_contact_index');
         }
 
-        $honeypot = $request->request->get('contact_hp');
         if (!empty($honeypot)) {
             // Si le champ est rempli → bot probable
             $this->addFlash('error', 'Une erreur est survenue.');
@@ -57,8 +60,8 @@ final class ContactController extends AbstractController
 
         // Récupération de tous les champs dynamiques
         $data = $request->request->all();
-        unset($data['_csrf_token']); // retirer le token du tableau
         unset($data['contact_hp']); // retirer le token du tableau
+        unset($data['_csrf']); // retirer le token du tableau
 
         $submission = new ContactSubmission();
         $submission->setData($data)

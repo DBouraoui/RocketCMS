@@ -61,7 +61,7 @@
         </div>
     {% endfor %}
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('contact_form') }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token('contact_field') }}">
 
     <div style="display:none;">
         <label for="contact_hp">Ne pas remplir ce champ</label>

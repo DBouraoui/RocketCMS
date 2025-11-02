@@ -16,14 +16,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ContactFieldController extends AbstractController
 {
     public function __construct(
-        private CacheService $cacheService,
+        private ContactFieldRepository $contactFieldRepository,
     ){}
 
     #[Route(name: 'app_admin_contact_field_index', methods: ['GET'])]
-    public function index(ContactFieldRepository $contactFieldRepository): Response
+    public function index(): Response
     {
         return $this->render('admin/contact_field/index.html.twig', [
-            'contact_fields' => $this->cacheService->getContactFields(),
+            'contact_fields' => $this->contactFieldRepository->findAll(),
         ]);
     }
 
@@ -66,8 +66,6 @@ final class ContactFieldController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->cacheService->resetContactFields();
-
             $this->addFlash('success', 'Le champ a été modifier');
 
             return $this->redirectToRoute('app_admin_contact_field_index', [], Response::HTTP_SEE_OTHER);
@@ -86,7 +84,6 @@ final class ContactFieldController extends AbstractController
             $entityManager->remove($contactField);
             $entityManager->flush();
 
-            $this->cacheService->resetContactFields();
 
             $this->addFlash('success', 'Votre nouveau champ a été supprimer');
         }

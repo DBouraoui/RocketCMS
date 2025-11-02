@@ -7,6 +7,7 @@ use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,13 +23,13 @@ final class NewsletterController extends AbstractController
     ){}
 
     #[Route('/newsletter', name: 'app_newsletter_index', methods: ['GET', 'POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, Security $security): Response
     {
        $newsletterStructure = $this->menuLinkRepository->findOneBy(['slug' => 'newsletter']);
 
-       if (!$newsletterStructure->isActive()) {
-           return $this->redirectToRoute('app_home_index');
-       }
+        if (!$security->isGranted('view', $newsletterStructure)) {
+            return $this->redirectToRoute('app_home_index');
+        }
 
         $form = $this->createForm(NewsletterType::class);
         $form->handleRequest($request);

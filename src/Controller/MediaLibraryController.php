@@ -6,6 +6,7 @@ use App\Repository\MediaLibraryRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -18,11 +19,11 @@ final class MediaLibraryController extends AbstractController
     ){}
 
     #[Route('/media-library', name: 'app_media_library_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Security $security): Response
     {
-        $menuLinks = $this->menuLinkRepository->findOneBy(['slug'=>'ma-mediateque']);
+        $mediaLibrary = $this->menuLinkRepository->findOneBy(['slug'=>'ma-mediateque']);
 
-        if (!$menuLinks->isActive()) {
+        if (!$security->isGranted('view', $mediaLibrary)) {
             return $this->redirectToRoute('app_home_index');
         }
 

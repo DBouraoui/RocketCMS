@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\ContactSubmission;
+use App\Entity\MenuLink;
 use App\Repository\ContactFieldRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\CacheService;
 use App\Service\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ContactController extends AbstractController
 {
@@ -26,13 +30,13 @@ final class ContactController extends AbstractController
     ){}
 
     #[Route('/contact', name: 'app_contact_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Security $security): Response
     {
-       $contact = $this->menuLinkRepository->findOneBy(['slug'=>'contact']);
+        $contact = $this->menuLinkRepository->findOneBy(['slug'=>'contact']);
 
-       if (!$contact->isActive()) {
+        if (!$security->isGranted('view', $contact)) {
            return $this->redirectToRoute('app_home_index');
-       }
+        }
 
         $fields = $this->contactFieldRepository->findAll();
 

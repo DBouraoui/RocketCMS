@@ -10,6 +10,7 @@ use App\Repository\BlogPostRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +25,11 @@ class BlogController extends AbstractController
         private EventDispatcherInterface $eventDispatcher
     ){}
     #[Route('/blog',name: 'app_blog_index', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(Request $request, Security $security): Response
     {
         $blogPage = $this->menuLinkRepository->findOneBy(['slug'=>'mon-blog']);
 
-        if (!$blogPage->isActive())
-        {
+        if (!$security->isGranted('view', $blogPage)) {
             return $this->redirectToRoute('app_home_index');
         }
 

@@ -27,8 +27,9 @@ final class MenuLinkVoter extends Voter
 
             case self::VIEW:
                   return  $subject->isActive();
-                break;
+                  break;
         }
+
         return false;
     }
 }

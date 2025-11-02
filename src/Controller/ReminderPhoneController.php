@@ -8,6 +8,7 @@ use App\Repository\MenuLinkRepository;
 use App\Service\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,11 +22,11 @@ final class ReminderPhoneController extends AbstractController
     ){}
 
     #[Route('/reminder-phone', name: 'app_reminder_phone_index', methods: ['GET','POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, Security $security): Response
     {
         $reminderPhone = $this->menuLinkRepository->findOneBy(['slug' => 'reminder-phone']);
 
-        if (!$reminderPhone->isActive()) {
+        if (!$security->isGranted('view', $reminderPhone)) {
             return $this->redirectToRoute('app_home_index');
         }
 

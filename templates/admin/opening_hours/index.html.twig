@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Mes Horaires{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: "Gestion des horaires d'ouverture",
+        subtitle: "Modifiez facilement vos horaires de la semaine"
+    } %}
+
+    <div class="min-h-screen bg-white text-neutral-900 px-8 py-10">
+        <div class="max-w-6xl mx-auto bg-neutral-50 shadow-sm border border-neutral-200 rounded-2xl overflow-hidden">
+
+            <table class="w-full border-collapse">
+                <thead class="bg-neutral-900 text-white text-sm uppercase tracking-wide">
+                <tr>
+                    <th class="py-3 px-4 text-left font-medium">Jour</th>
+                    <th class="py-3 px-4 text-left font-medium">Ouverture matin</th>
+                    <th class="py-3 px-4 text-left font-medium">Fermeture matin</th>
+                    <th class="py-3 px-4 text-left font-medium">Ouverture après-midi</th>
+                    <th class="py-3 px-4 text-left font-medium">Fermeture après-midi</th>
+                    <th class="py-3 px-4 text-center font-medium">Fermé</th>
+                    <th class="py-3 px-4 text-center font-medium">Dernière mise à jour</th>
+                    <th class="py-3 px-4 text-right font-medium">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-200">
+                {% for opening_hour in opening_hours %}
+                    <tr class="hover:bg-neutral-100 transition">
+                        <td class="py-3 px-4 font-medium">{{ opening_hour.day }}</td>
+                        <td class="py-3 px-4">{{ opening_hour.openMorning ? opening_hour.openMorning|date('H:i') : '-' }}</td>
+                        <td class="py-3 px-4">{{ opening_hour.closeMorning ? opening_hour.closeMorning|date('H:i') : '-' }}</td>
+                        <td class="py-3 px-4">{{ opening_hour.openAfternoon ? opening_hour.openAfternoon|date('H:i') : '-' }}</td>
+                        <td class="py-3 px-4">{{ opening_hour.closeAfternoon ? opening_hour.closeAfternoon|date('H:i') : '-' }}</td>
+                        <td class="py-3 px-4 text-center">
+                            {% if opening_hour.isclosed %}
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">Fermé</span>
+                            {% else %}
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Ouvert</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-3 px-4 text-center text-sm text-neutral-500">
+                            {{ opening_hour.updatedAt ? opening_hour.updatedAt|date('d/m/Y H:i') : '-' }}
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <a href="{{ path('app_admin_opening_hours_edit', {'id': opening_hour.id}) }}"
+                               class="text-sm text-blue-600 hover:text-blue-800 font-medium">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="py-6 text-center text-neutral-500">Aucun horaire configuré.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

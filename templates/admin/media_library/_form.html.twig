@@ -25,7 +25,7 @@
                     'class': 'file-input file-input-bordered w-full',
                     'data-action': 'change->media-library#preview'
                 }}) }}
-                {{ form_errors(form.picture) }}
+                <span class="text-red-500">{{ form_errors(form.picture) }}</span>
             </div>
 
             {# 🖼️ Si une image existe déjà, on l'affiche ici #}
@@ -53,13 +53,15 @@
     <div class="form-control">
         {{ form_label(form.title, null, {'label_attr': {'class': 'label font-semibold'}}) }}
         {{ form_widget(form.title, {'attr': {'class': 'input input-bordered w-full'}}) }}
-        {{ form_errors(form.title) }}
+        <span class="text-red-500">{{ form_errors(form.title) }}</span>
+
     </div>
 
     <div class="form-control">
         {{ form_label(form.description, null, {'label_attr': {'class': 'label font-semibold'}}) }}
         {{ form_widget(form.description, {'attr': {'class': 'textarea textarea-bordered w-full h-40'}}) }}
-        {{ form_errors(form.description) }}
+        <span class="text-red-500">{{ form_errors(form.description) }}</span>
+
     </div>
 
     <div class="flex justify-end pt-4">

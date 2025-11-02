@@ -103,6 +103,18 @@ class MenuLinkFixtures extends Fixture
                 'structure' => [],
                 'content' => [],
             ],
+            [
+                'id' => 10,
+                'title' => 'Nos horraires',
+                'url' => 'app_opening_hours_index',
+                'is_active' => true,
+                'slug' => 'mes-horraires',
+                'updated_at' => new \DateTimeImmutable('2025-10-30 10:21:13'),
+                'is_footer' => true,
+                'is_navbar' => true,
+                'structure' => [],
+                'content' => [],
+            ],
         ];
 
         foreach ($data as $item) {

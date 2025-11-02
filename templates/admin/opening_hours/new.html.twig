@@ -1,0 +1,33 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvel horaire{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: "Création d'un horaire d'ouverture",
+        subtitle: "Ajoutez ou modifiez vos horaires facilement"
+    } %}
+
+    <div class="min-h-screen bg-white text-neutral-900 px-8 py-10">
+        <div class="max-w-3xl mx-auto bg-neutral-50 shadow-sm border border-neutral-200 rounded-2xl p-8">
+
+            <h2 class="text-xl font-semibold mb-6 border-b border-neutral-200 pb-3">Nouvel horaire</h2>
+
+            <div class="space-y-6">
+                {{ include('admin/opening_hours/_form.html.twig', { button_label: 'Enregistrer' }) }}
+            </div>
+
+            <div class="mt-8 flex items-center justify-between border-t border-neutral-200 pt-6">
+                <a href="{{ path('app_admin_opening_hours_index') }}"
+                   class="inline-block text-sm text-neutral-600 hover:text-neutral-900 transition">
+                    ← Retour à la liste
+                </a>
+
+                <button form="opening_hours_form"
+                        class="inline-block px-5 py-2.5 bg-neutral-900 text-white rounded-lg text-sm hover:bg-neutral-800 transition">
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

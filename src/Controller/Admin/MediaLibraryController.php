@@ -59,6 +59,8 @@ final class MediaLibraryController extends AbstractController
             $entityManager->persist($mediaLibrary);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre média a bien été créer');
+
             return $this->redirectToRoute('app_admin_media_library_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -108,6 +110,8 @@ final class MediaLibraryController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre média a bien été modifié');
+
             return $this->redirectToRoute('app_admin_media_library_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -130,6 +134,7 @@ final class MediaLibraryController extends AbstractController
             $entityManager->remove($mediaLibrary);
             $entityManager->flush();
         }
+        $this->addFlash('success', 'Votre média a bien été supprimer');
 
         return $this->redirectToRoute('app_admin_media_library_index', [], Response::HTTP_SEE_OTHER);
     }

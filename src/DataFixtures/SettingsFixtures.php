@@ -18,5 +18,8 @@ class SettingsFixtures extends Fixture {
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable())
             ->setTheme(ThemesEnum::BUSINESS);
+
+            $manager->persist($settings);
+            $manager->flush();
     }
 }

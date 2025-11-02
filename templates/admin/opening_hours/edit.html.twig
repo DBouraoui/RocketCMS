@@ -1,0 +1,33 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un horaire{% endblock %}
+
+{% block body %}
+    {% include 'admin/components/Header.html.twig' with {
+        title: 'Modifier un horaire d’ouverture',
+        subtitle: 'Ajustez les horaires pour un jour spécifique'
+    } %}
+
+    <div class="min-h-screen bg-white text-neutral-900 px-8 py-10">
+        <div class="max-w-2xl mx-auto bg-neutral-50 shadow-sm border border-neutral-200 rounded-2xl p-8">
+            <h2 class="text-xl font-semibold mb-6 border-b border-neutral-200 pb-3">
+                Édition : {{ opening_hour.day }}
+            </h2>
+
+            {{ include('admin/opening_hours/_form.html.twig', {
+                button_label: 'Mettre à jour'
+            }) }}
+
+            <div class="mt-8 flex items-center justify-between border-t border-neutral-200 pt-6">
+                <a href="{{ path('app_admin_opening_hours_index') }}"
+                   class="text-sm text-neutral-600 hover:text-neutral-900 transition">
+                    ← Retour à la liste
+                </a>
+
+                <div class="flex items-center gap-4">
+                    {{ include('admin/opening_hours/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

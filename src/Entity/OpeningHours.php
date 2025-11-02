@@ -16,16 +16,16 @@ class OpeningHours
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $day = null;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 8, nullable: true)]
     private ?string $openMorning = null;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 8, nullable: true)]
     private ?string $closeMorning = null;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 8, nullable: true)]
     private ?string $openAfternoon = null;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 8, nullable: true)]
     private ?string $closeAfternoon = null;
 
     #[ORM\Column]

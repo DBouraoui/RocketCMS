@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ContactSubmission;
+use App\Repository\ContactFieldRepository;
 use App\Repository\MenuLinkRepository;
 use App\Service\CacheService;
 use App\Service\SettingsService;
@@ -20,7 +21,7 @@ final class ContactController extends AbstractController
         private SettingsService $settingsService,
         private EntityManagerInterface $entityManager,
         private MenuLinkRepository $menuLinkRepository,
-        private CacheService $cacheService,
+        private ContactFieldRepository $contactFieldRepository,
         private CsrfTokenManagerInterface $csrfTokenManager
     ){}
 
@@ -33,7 +34,7 @@ final class ContactController extends AbstractController
            return $this->redirectToRoute('app_home_index');
        }
 
-        $fields = $this->cacheService->getContactFields();
+        $fields = $this->contactFieldRepository->findAll();
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/contact/index.html.twig', [
             'fields' => $fields,

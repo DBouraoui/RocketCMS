@@ -70,7 +70,7 @@ final class ContactFieldController extends AbstractController
 
             $this->addFlash('success', 'Le champ a été modifier');
 
-            return $this->redirectToRoute('app_contact_field_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_contact_field_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/contact_field/edit.html.twig', [
@@ -91,6 +91,6 @@ final class ContactFieldController extends AbstractController
             $this->addFlash('success', 'Votre nouveau champ a été supprimer');
         }
 
-        return $this->redirectToRoute('app_contact_field_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_contact_field_index', [], Response::HTTP_SEE_OTHER);
     }
 }

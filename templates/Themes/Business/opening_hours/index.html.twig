@@ -1,0 +1,49 @@
+{% extends './Themes/Business/base.html.twig' %}
+
+{% block title %}Nos horaires d'ouverture{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-white text-neutral-900 p-6">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold mb-8 text-center">Nos horaires d'ouverture</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for hour in openingHours %}
+                    <div class="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+                        <h2 class="text-xl font-semibold mb-3">{{ hour.day }}</h2>
+
+                        {% if hour.isclosed %}
+                            <p class="text-red-600 font-medium flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                                Fermé
+                            </p>
+                        {% else %}
+                            <p class="text-neutral-700 mb-1 flex items-center gap-2">
+                            <span class="p-1.5 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+                                </svg>
+                            </span>
+                                                        <span class="font-semibold">Matin :</span> {{ hour.openMorning ? hour.openMorning|date('H:i') : '-' }}
+                                - {{hour.closeMorning ? hour.closeMorning|date('H:i') : '-' }}
+                                                    </p>
+
+                                                    <p class="text-neutral-700 mb-1 flex items-center gap-2">
+                            <span class="p-1.5 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+                                </svg>
+                            </span>
+                                <span class="font-semibold">Après-midi :</span> {{hour.openAfternoon ? hour.openAfternoon|date('H:i') : '-' }} - {{hour.closeAfternoon ? hour.closeAfternoon|date('H:i') : '-' }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="col-span-3 text-center text-neutral-500">Horaires non disponibles pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

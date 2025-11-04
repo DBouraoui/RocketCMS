@@ -66,7 +66,7 @@ final class ContactController extends AbstractController
         // Récupération de tous les champs dynamiques
         $data = $request->request->all();
         unset($data['contact_hp']); // retirer le token du tableau
-        unset($data['_csrf']); // retirer le token du tableau
+        unset($data['_token']); // retirer le token du tableau
 
         $submission = new ContactSubmission();
         $submission->setData($data)

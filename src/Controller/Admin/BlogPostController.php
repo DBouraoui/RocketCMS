@@ -41,12 +41,6 @@ final class BlogPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $blogPost->setSlug($this->slugger->slug($blogPost->getTitle()));
 
-            $blogAlreadyakenSlug = $this->blogPostRepository->findOneBy(['slug' => $blogPost->getSlug()]);
-
-            if ($blogAlreadyakenSlug) {
-                $this->addFlash('danger', 'Le titre de blog existe déja');
-                return $this->redirectToRoute('app_admin_blog_post_index');
-            }
 
             /** @var UploadedFile|null $coverPicture */
             $coverPicture = $form->get('coverPicture')->getData();

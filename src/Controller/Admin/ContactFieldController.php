@@ -39,7 +39,7 @@ final class ContactFieldController extends AbstractController
 
             $this->addFlash('success', 'Votre nouveau champ a été créer');
 
-            return $this->redirectToRoute('app_contact_field_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_contact_field_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/contact_field/new.html.twig', [

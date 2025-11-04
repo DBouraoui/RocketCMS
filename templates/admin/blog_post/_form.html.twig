@@ -1,21 +1,22 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
     <div>
         {{ form_label(form.title) }}
         {{ form_widget(form.title, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Titre de l’article'}}) }}
-        {{ form_errors(form.title) }}
+        <span class="text-red-500">{{ form_errors(form.title) }}</span>
     </div>
 
     <div>
         {{ form_label(form.subtitle) }}
         {{ form_widget(form.subtitle, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Sous-titre ou phrase d’accroche'}}) }}
-        {{ form_errors(form.subtitle) }}
+        <span class="text-red-500"> {{ form_errors(form.subtitle) }}</span>
     </div>
 
     <div class="md:col-span-2">
         {{ form_label(form.description) }}
         {{ form_widget(form.description, {'attr': {'class': 'textarea textarea-bordered w-full', 'rows': 3, 'placeholder': 'Brève description de l’article'}}) }}
-        {{ form_errors(form.description) }}
+        <span class="text-red-500"> {{ form_errors(form.description) }}</span>
     </div>
 
     <div class="md:col-span-2">
@@ -27,25 +28,26 @@
                 'placeholder': 'Contenu complet en Markdown',
                 'data-controller': 'markdown-editor'
             }
-        }) }}        {{ form_errors(form.content) }}
+        }) }}
+        <span class="text-red-500">{{ form_errors(form.content) }}</span>
     </div>
 
     <div class="md:col-span-2">
         {{ form_label(form.coverPicture) }}
         {{ form_widget(form.coverPicture, {'attr': {'class': 'input input-bordered w-full'}}) }}
-        {{ form_errors(form.coverPicture) }}
+        <span class="text-red-500">{{ form_errors(form.coverPicture) }}</span>
     </div>
 
     <div class="md:col-span-2">
         {{ form_label(form.tags) }}
         {{ form_widget(form.tags, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'ex: Symfony, Angular'}}) }}
-        {{ form_errors(form.tags) }}
+        <span class="text-red-500"> {{ form_errors(form.tags) }}</span>
     </div>
 
     <div class="md:col-span-2">
         {{ form_label(form.author) }}
         {{ form_widget(form.author, {'attr': {'class': 'select select-bordered w-full'}}) }}
-        {{ form_errors(form.author) }}
+        <span class="text-red-500"> {{ form_errors(form.author) }}</span>
     </div>
 </div>
 

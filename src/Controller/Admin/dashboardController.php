@@ -30,7 +30,7 @@ final class dashboardController extends AbstractController
     {
         $dashboardData = $this->tagAwareAdapter->get('dashboard', function(ItemInterface $item) {
             // Définir un TTL si tu veux (ex: 5 min)
-            $item->expiresAfter(300);
+            $item->expiresAfter(60);
             // Ajouter un tag pour pouvoir invalider facilement
             $item->tag('dashboard');
 

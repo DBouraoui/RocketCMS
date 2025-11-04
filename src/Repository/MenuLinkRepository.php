@@ -16,6 +16,28 @@ class MenuLinkRepository extends ServiceEntityRepository
         parent::__construct($registry, MenuLink::class);
     }
 
+    public function getDashboard(): array
+    {
+        $results = $this->createQueryBuilder('m')
+            ->select('m.isActive, COUNT(m.id) AS count')
+            ->groupBy('m.isActive')
+            ->getQuery()
+            ->getResult();
+
+        $dashboard = ['active' => 0, 'inactive' => 0];
+
+        foreach ($results as $row) {
+            if ($row['isActive']) {
+                $dashboard['active'] = (int) $row['count'];
+            } else {
+                $dashboard['inactive'] = (int) $row['count'];
+            }
+        }
+
+        return $dashboard;
+    }
+
+
 //    /**
 //     * @return MenuLink[] Returns an array of MenuLink objects
 //     */

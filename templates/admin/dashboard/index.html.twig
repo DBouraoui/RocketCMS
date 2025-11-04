@@ -8,4 +8,161 @@
         subtitle: 'Modifier votre sites web comme vous le souhaitez'
     } %}
 
+    <div class="min-h-screen bg-base-100 text-base-content p-6">
+        <h1 class="text-3xl font-bold mb-6">📊 Tableau de bord</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+            <!-- Blog -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-semibold">Articles</h2>
+                    <p class="text-4xl font-bold">{{ blogs.total }}</p>
+                    <p class="text-sm opacity-70">Total des articles publiés</p>
+                </div>
+            </div>
+
+            <!-- Pages actives/inactives -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="card-title text-lg font-semibold">Menus</h2>
+                        <span class="badge badge-outline">{{ pages.active + pages.inactive }} total</span>
+                    </div>
+
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex items-center justify-between border-b border-base-300 pb-2">
+                            <span class="text-sm opacity-70">Actifs</span>
+                            <span class="text-green-600 font-semibold">{{ pages.active }}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm opacity-70">Inactifs</span>
+                            <span class="text-red-500 font-semibold">{{ pages.inactive }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-semibold">Newsletter</h2>
+                    <p class="text-4xl font-bold">{{ newsletter }}</p>
+                    <p class="text-sm opacity-70">Abonnés inscrits</p>
+                </div>
+            </div>
+
+            <!-- Rappels téléphone -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-semibold">Rappels Téléphone</h2>
+                    <p class="text-4xl font-bold">{{ reminderPhone }}</p>
+                    <p class="text-sm opacity-70">Demandes de rappel</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact non lus -->
+        <div class="card bg-base-200 shadow-md hover:shadow-lg transition mb-10">
+            <div class="card-body">
+                <h2 class="card-title text-lg font-semibold">Contacts non lus</h2>
+                <p class="text-4xl font-bold text-red-500">{{ contactSubmission }}</p>
+            </div>
+        </div>
+
+        <!-- Média enregistrer -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+            <!-- Blog -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-semibold">Médiatèque</h2>
+                    <p class="text-4xl font-bold">{{ mediaLibrary }}</p>
+                    <p class="text-sm opacity-70">Total d'image enregistrée</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <!-- Logo du site -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body flex flex-col items-center justify-center">
+                    <h2 class="card-title text-lg font-semibold mb-2">Logo du site</h2>
+                    {% if settings.logo %}
+                        <img src="{{ asset(settings.logo) }}" alt="Logo du site" class="h-24 object-contain mb-2">
+                    {% else %}
+                        <div class="h-24 w-24 bg-base-300 flex items-center justify-center rounded-md mb-2">
+                            <span class="text-sm opacity-50">Aucun logo</span>
+                        </div>
+                    {% endif %}
+                    <p class="text-xs text-center opacity-60">
+                        Le logo apparaît sur votre site et vos documents officiels, pour renforcer votre identité visuelle.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Favicon -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body flex flex-col items-center justify-center">
+                    <h2 class="card-title text-lg font-semibold mb-2">Favicon</h2>
+                    {% if settings.favicon %}
+                        <img src="{{ asset(settings.favicon) }}" alt="Favicon" class="h-16 w-16 object-contain mb-2">
+                    {% else %}
+                        <div class="h-16 w-16 bg-base-300 flex items-center justify-center rounded-md mb-2">
+                            <span class="text-sm opacity-50">Aucun favicon</span>
+                        </div>
+                    {% endif %}
+                    <p class="text-xs text-center opacity-60">
+                        Le favicon est l’icône qui apparaît dans l’onglet du navigateur pour votre site.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Tableau des articles les plus consultés -->
+        <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+            <div class="card-body">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="card-title text-lg font-semibold">📰 Articles les plus consultés</h2>
+                    <span class="badge badge-outline">{{ blogs.total ?? 0 }} articles</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="table w-full border border-base-300 rounded-lg">
+                        <thead class="bg-base-300">
+                        <tr class="text-sm text-base-content/70">
+                            <th class="py-3 px-4 text-left">Titre</th>
+                            <th class="py-3 px-4 text-right">Vues</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if blogs|length > 0 %}
+                            {% for article in blogs %}
+                                {% if article.title is defined %}
+                                    <tr class="hover:bg-base-100 transition">
+                                        <td class="py-3 px-4">
+                                            <a href="{{ path('app_blog_post_show', {'id': article.id}) }}"
+                                               class="text-primary hover:underline font-medium">
+                                                {{ article.title }}
+                                            </a>
+                                        </td>
+                                        <td class="py-3 px-4 text-right font-semibold text-base-content/80">
+                                            {{ article.viewCount }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center py-4 opacity-70">
+                                    Aucun article disponible
+                                </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

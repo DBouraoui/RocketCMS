@@ -16,6 +16,14 @@ class ContactSubmissionRepository extends ServiceEntityRepository
         parent::__construct($registry, ContactSubmission::class);
     }
 
+    public function dashboardCountNotRead(){
+        return $this->createQueryBuilder('cs')
+            ->select('COUNT(cs.id)')
+            ->where('cs.isRead = 0')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return ContactSubmission[] Returns an array of ContactSubmission objects
 //     */

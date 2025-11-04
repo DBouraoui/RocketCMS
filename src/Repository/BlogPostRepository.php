@@ -16,6 +16,16 @@ class BlogPostRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogPost::class);
     }
 
+    public function getBlogDashboard(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.title', 'a.viewCount', 'a.id')
+            ->orderBy('a.viewCount', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return BlogPost[] Returns an array of BlogPost objects
     //     */

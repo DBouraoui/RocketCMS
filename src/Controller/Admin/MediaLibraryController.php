@@ -51,7 +51,13 @@ final class MediaLibraryController extends AbstractController
                 $media->move($uploadDir, $newFilename);
 
                 // Enregistre le chemin relatif
+                $filePath = $uploadDir . '/' . $newFilename;
+
+                // 🔹 Calcul de la taille en Mo et mise à jour
                 $mediaPost->setPicture('/uploads/' . $newFilename);
+                $sizeBytes = filesize($filePath); // taille en octets
+                $sizeMb = $sizeBytes / 1048576; // conversion en Mo
+                $mediaPost->setSizeMb(round($sizeMb, 2));
             }
 
             $mediaLibrary->setCreatedAt(new \DateTimeImmutable());
@@ -106,6 +112,12 @@ final class MediaLibraryController extends AbstractController
 
                 // Enregistre le chemin relatif
                 $mediaLibrary->setPicture('/uploads/' . $newFilename);
+
+                // 🔹 Calcul de la taille en Mo et mise à jour
+                $filePath = $uploadDir . '/' . $newFilename;
+                $sizeBytes = filesize($filePath); // taille en octets
+                $sizeMb = $sizeBytes / 1048576; // conversion en Mo
+                $mediaLibrary->setSizeMb(round($sizeMb, 2));
             }
 
             $entityManager->flush();

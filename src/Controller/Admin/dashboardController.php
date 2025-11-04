@@ -46,6 +46,7 @@ final class dashboardController extends AbstractController
 
         //count media int
         $mediaLibrary = count($this->mediaLibraryRepository->findAll());
+        $totalMediaSize = $this->mediaLibraryRepository->getTotalSize();
 
         return $this->render('admin/dashboard/index.html.twig', [
             'blogs' => $blogs,
@@ -54,6 +55,7 @@ final class dashboardController extends AbstractController
             'reminderPhone' => $reminderPhone,
             'contactSubmission' => $contactSubmission,
             'mediaLibrary'=> $mediaLibrary,
+            'totalMediaSize' => $totalMediaSize,
         ]);
     }
 }

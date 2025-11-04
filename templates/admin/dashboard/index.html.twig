@@ -79,10 +79,19 @@
                     <p class="text-sm opacity-70">Total d'image enregistrée</p>
                 </div>
             </div>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <!-- Logo du site -->
+            <!-- Espace total utilisé par les médias -->
+            <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
+                <div class="card-body flex flex-col items-center justify-center">
+                    <h2 class="card-title text-lg font-semibold mb-2">📦 Espace utilisé</h2>
+                    <p class="text-4xl font-bold text-blue-600 mb-2">{{ totalMediaSize|number_format(2, '.', ',') }} Mo</p>
+                    <p class="text-xs text-center opacity-60">
+                        Total de l’espace utilisé par vos fichiers médias (images, documents, etc.).
+                        Cela vous aide à suivre vos quotas et optimiser votre stockage.
+                    </p>
+                </div>
+            </div>
+
             <div class="card bg-base-200 shadow-md hover:shadow-lg transition">
                 <div class="card-body flex flex-col items-center justify-center">
                     <h2 class="card-title text-lg font-semibold mb-2">Logo du site</h2>

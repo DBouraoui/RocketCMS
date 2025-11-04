@@ -16,6 +16,17 @@ class MediaLibraryRepository extends ServiceEntityRepository
         parent::__construct($registry, MediaLibrary::class);
     }
 
+    public function getTotalSize(): float
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('SUM(m.sizeMb) as totalSizeMb')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (float) $qb;
+    }
+
+
     //    /**
     //     * @return MediaLibrary[] Returns an array of MediaLibrary objects
     //     */

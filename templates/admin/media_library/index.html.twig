@@ -27,6 +27,7 @@
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Ajouté le</th>
+                    <th>Taille de l'image</th>
                     <th class="text-right">Actions</th>
                 </tr>
                 </thead>
@@ -44,6 +45,11 @@
                         <td>{{ media_library.title }}</td>
                         <td class="max-w-xs truncate" title="{{ media_library.description }}">{{ media_library.description }}</td>
                         <td>{{ media_library.createdAt ? media_library.createdAt|date('d/m/Y H:i') : '—' }}</td>
+                        <td class=" font-semibold text-base-content/80">
+                            {{ media_library.sizeMb|number_format(2, '.', ',') }} Mo
+                        </td>
+
+
                         <td class="text-right space-x-2">
                             <a href="{{ path('app_admin_media_library_show', {'id': media_library.id}) }}" class="btn btn-xs btn-outline">Voir</a>
                             <a href="{{ path('app_admin_media_library_edit', {'id': media_library.id}) }}" class="btn btn-xs btn-primary">Modifier</a>

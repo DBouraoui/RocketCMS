@@ -26,6 +26,9 @@ class MediaLibrary
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $sizeMb = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class MediaLibrary
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getSizeMb(): ?float
+    {
+        return $this->sizeMb;
+    }
+
+    public function setSizeMb(?float $sizeMb): static
+    {
+        $this->sizeMb = $sizeMb;
 
         return $this;
     }

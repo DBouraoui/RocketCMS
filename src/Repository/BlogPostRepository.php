@@ -25,6 +25,13 @@ class BlogPostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getSizeMedia() {
+        return $this->createQueryBuilder('a')
+            ->select('SUM(a.pictureSize)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 
     //    /**
     //     * @return BlogPost[] Returns an array of BlogPost objects

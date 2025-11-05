@@ -47,6 +47,9 @@ class BlogPost
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $pictureSize = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -189,5 +192,17 @@ class BlogPost
     {
         return $this->viewCount++;
 
+    }
+
+    public function getPictureSize(): ?float
+    {
+        return $this->pictureSize;
+    }
+
+    public function setPictureSize(?float $pictureSize): static
+    {
+        $this->pictureSize = $pictureSize;
+
+        return $this;
     }
 }

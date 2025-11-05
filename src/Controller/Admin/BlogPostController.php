@@ -41,12 +41,12 @@ final class BlogPostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $blogPost->setSlug($this->slugger->slug($blogPost->getTitle()));
+            $slug = $this->slugger->slug($blogPost->getTitle());
+            $blogPost->setSlug($slug);
 
-            $isSlugAlreadyExist = $this->blogPostRepository->findOneBy(['slug'=>$blogPost->getSlug()]);
-
+            $isSlugAlreadyExist = $this->blogPostRepository->findOneBy(['slug' => $slug]);
             if ($isSlugAlreadyExist) {
-                $form->get('title')->addError(new FormError('Le titre de blog existe déja'));
+                $form->get('title')->addError(new FormError('Le titre de blog existe déjà'));
             }
 
             if (count($form->getErrors(true)) === 0) {
@@ -54,18 +54,20 @@ final class BlogPostController extends AbstractController
                 $coverPicture = $form->get('coverPicture')->getData();
 
                 if ($coverPicture) {
+                    // Déplace le fichier
                     $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads';
-                    $safeFilename = $this->slugger->slug($blogPost->getTitle());
-                    $uniqueSuffix = uniqid();
-                    $extension = $coverPicture->guessExtension() ?? 'jpg';
-                    $newFilename = $safeFilename . '_' . $uniqueSuffix . '.' . $extension;
+                    $uniqueFilename = $slug . '_' . uniqid() . '.' . ($coverPicture->guessExtension() ?? 'jpg');
+                    $coverPicture->move($uploadDir, $uniqueFilename);
+                    $blogPost->setCoverPicture('/uploads/' . $uniqueFilename);
 
-                    $coverPicture->move($uploadDir, $newFilename);
-                    $blogPost->setCoverPicture('/uploads/' . $newFilename);
+                    // Récupère la taille réelle en Mo
+                    $filePath = $uploadDir . '/' . $uniqueFilename;
+                    $sizeMb = filesize($filePath) / 1048576;
+                    $blogPost->setPictureSize(round($sizeMb, 2));
                 }
 
                 $blogPost->setCreatedAt(new \DateTimeImmutable());
-                $blogPost->setAuthor($blogPost->getAuthor() ?? $user);
+                $blogPost->setAuthor($user);
 
                 $entityManager->persist($blogPost);
                 $entityManager->flush();
@@ -73,7 +75,6 @@ final class BlogPostController extends AbstractController
                 $this->addFlash('success', 'Votre article a bien été créé.');
                 return $this->redirectToRoute('app_admin_blog_post_index');
             }
-
         }
 
         return $this->render('admin/blog_post/new.html.twig', [
@@ -81,6 +82,7 @@ final class BlogPostController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_admin_blog_post_show', methods: ['GET'])]
     public function show(BlogPost $blogPost): Response
@@ -98,18 +100,11 @@ final class BlogPostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Génère un slug à partir du titre
             $slug = $this->slugger->slug($blogPost->getTitle());
-
-            // Vérifie si un autre article utilise déjà ce slug
             $existingPost = $this->blogPostRepository->findOneBy(['slug' => $slug]);
 
-            // Vérifie que ce n'est pas le même article qu'on édite
             if ($existingPost && $existingPost->getId() !== $blogPost->getId()) {
-                // Ajoute une erreur sur le champ "title"
                 $form->get('title')->addError(new FormError('Ce titre existe déjà.'));
-
-                // On renvoie la vue sans redirection → les données restent affichées
                 return $this->render('admin/blog_post/edit.html.twig', [
                     'blog_post' => $blogPost,
                     'form' => $form,
@@ -120,28 +115,28 @@ final class BlogPostController extends AbstractController
             $newImage = $form->get('coverPicture')->getData();
             $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads';
 
-            // Si une nouvelle image est uploadée
             if ($newImage) {
-                // Supprime l’ancienne image si elle existe
+                // Supprime l'ancienne image si elle existe
                 if ($oldImage && file_exists($this->getParameter('kernel.project_dir') . '/public' . $oldImage)) {
                     @unlink($this->getParameter('kernel.project_dir') . '/public' . $oldImage);
                 }
 
-                // Génère un nom de fichier unique
-                $safeFilename = $slug;
-                $uniqueSuffix = uniqid();
-                $extension = $newImage->guessExtension() ?? 'jpg';
-                $newFilename = $safeFilename . '_' . $uniqueSuffix . '.' . $extension;
+                // Déplace le nouveau fichier
+                $uniqueFilename = $slug . '_' . uniqid() . '.' . ($newImage->guessExtension() ?? 'jpg');
+                $newImage->move($uploadDir, $uniqueFilename);
+                $blogPost->setCoverPicture('/uploads/' . $uniqueFilename);
 
-                // Déplace le fichier
-                $newImage->move($uploadDir, $newFilename);
-                $blogPost->setCoverPicture('/uploads/' . $newFilename);
+                // Taille réelle en Mo
+                $filePath = $uploadDir . '/' . $uniqueFilename;
+                $sizeMb = filesize($filePath) / 1048576;
+                $blogPost->setPictureSize(round($sizeMb, 2));
             } else {
-                // Si pas de nouvelle image → on garde l’ancienne
-                $blogPost->setCoverPicture($oldImage);
+                // Pas de nouvelle image → on garde l’ancienne taille si le fichier existe
+                if ($oldImage && file_exists($this->getParameter('kernel.project_dir') . '/public' . $oldImage)) {
+                    $blogPost->setPictureSize(round(filesize($this->getParameter('kernel.project_dir') . '/public' . $oldImage) / 1048576, 2));
+                }
             }
 
-            // Met à jour la date de modification
             $blogPost->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
@@ -154,6 +149,7 @@ final class BlogPostController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_admin_blog_post_delete', methods: ['POST'])]
     public function delete(Request $request, BlogPost $blogPost, EntityManagerInterface $entityManager): Response

@@ -37,6 +37,7 @@ final class dashboardController extends AbstractController
             //[]['title'=>'titre, 'viewCount'=>123], total=>1221
             $blogs = $this->blogPostRepository->getBlogDashboard();
             $blogs['total'] = count($blogs);
+            $totalBlogMediaSize = $this->blogPostRepository->getSizeMedia();
 
             //array:2 ["active" => 6 "inactive" => 1]
             $pages = $this->menuLinkRepository->getDashboard();
@@ -52,7 +53,10 @@ final class dashboardController extends AbstractController
 
             //count media int
             $mediaLibrary = count($this->mediaLibraryRepository->findAll());
-            $totalMediaSize = $this->mediaLibraryRepository->getTotalSize();
+            $mediaLibrarySizeMedia = $this->mediaLibraryRepository->getTotalSize();
+
+            //Calcule des size média complet
+            $totalMediaSize = $totalBlogMediaSize + $mediaLibrarySizeMedia;
 
             // Retourner toutes les données dans un tableau
             return [

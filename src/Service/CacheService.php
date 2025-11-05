@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\MenuLink;
 use App\Entity\Settings;
 use App\Repository\ContactFieldRepository;
 use App\Repository\MenuLinkRepository;
@@ -14,8 +13,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class CacheService
 {
-    const int ONE_DAY_CACHE = 24 * 3600;
-    const int ONE_MONTH_CACHE = (24 * 3600) * 30;
+    const  ONE_DAY_CACHE = 24 * 3600;
+    const  ONE_MONTH_CACHE = (24 * 3600) * 30;
     public function __construct(
         private MenuLinkRepository $menuLinkRepository,
         private TagAwareCacheInterface $cache,

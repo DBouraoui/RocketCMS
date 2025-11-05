@@ -43,9 +43,9 @@ final class BlogPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $blogPost->setSlug($this->slugger->slug($blogPost->getTitle()));
 
-            $blogalreadyexist = $this->blogPostRepository->findOneBy(['slug'=>$blogPost->getSlug()]);
+            $isSlugAlreadyExist = $this->blogPostRepository->findOneBy(['slug'=>$blogPost->getSlug()]);
 
-            if ($blogalreadyexist) {
+            if ($isSlugAlreadyExist) {
                 $form->get('title')->addError(new FormError('Le titre de blog existe déja'));
             }
 

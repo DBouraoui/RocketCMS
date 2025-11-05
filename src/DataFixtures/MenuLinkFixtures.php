@@ -37,11 +37,7 @@ class MenuLinkFixtures extends Fixture
                     "subtitle" => ["champ" => "textarea", "label" => "Sous-titre", "helper" => "Le texte qui accompagne le titre"],
                     "button_label" => ["champ" => "text", "label" => "Texte du bouton", "helper" => "Le texte du bouton d’envoie du formulaire"],
                 ],
-                'content' => [
-                    "title" => "Une question, un problème contactez nous !",
-                    "subtitle" => "Pour tout problème ou sujet divers n'hésiter pas a nous contacter",
-                    "button_label" => "Soumettre le formulaire !",
-                ],
+                'content' => [],
             ],
             [
                 'id' => 6,
@@ -57,11 +53,7 @@ class MenuLinkFixtures extends Fixture
                     "subtitle" => ["champ" => "textarea", "label" => "Sous-titre", "helper" => "Le texte qui accompagne le titre"],
                     "button_label" => ["champ" => "text", "label" => "Texte du bouton", "helper" => "Le texte du bouton d’inscription"],
                 ],
-                'content' => [
-                    "title" => "Restons en contact !",
-                    "subtitle" => "Profitez d'avantage spéciaux et en avance !",
-                    "button_label" => "M'inscrire a la newsletter",
-                ],
+                'content' => [],
             ],
             [
                 'id' => 7,

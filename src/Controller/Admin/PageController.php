@@ -28,6 +28,7 @@ class PageController extends AbstractController
     {
         return $this->render('admin/pages/index.html.twig', [
             'pages' => $this->menuLinkRepository->findAll(),
+            'X-Frame-Options' => 'ALLOWALL',
         ]);
     }
 

@@ -32,6 +32,7 @@ class OpeningHoursController extends AbstractController
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/opening_hours/index.html.twig', [
             'openingHours' => $openingHours,
+            'content'=> $horraireMenu->getContent()
         ]);
     }
 }

@@ -88,7 +88,9 @@ class MenuLinkFixtures extends Fixture
                 'updated_at' => new \DateTimeImmutable('2025-10-29 16:57:31'),
                 'is_footer' => true,
                 'is_navbar' => true,
-                'structure' => [],
+                'structure' => [
+                    "title" => ["champ" => "text", "label" => "Titre principal", "helper" => "Le titre affiché en haut de la page"],
+                ],
                 'content' => [],
             ],
             [
@@ -100,7 +102,9 @@ class MenuLinkFixtures extends Fixture
                 'updated_at' => new \DateTimeImmutable('2025-10-30 10:21:13'),
                 'is_footer' => true,
                 'is_navbar' => true,
-                'structure' => [],
+                'structure' => [
+                    "title" => ["champ" => "text", "label" => "Titre principal", "helper" => "Le titre affiché en haut de la page"],
+                ],
                 'content' => [],
             ],
             [
@@ -112,7 +116,9 @@ class MenuLinkFixtures extends Fixture
                 'updated_at' => new \DateTimeImmutable('2025-10-30 10:21:13'),
                 'is_footer' => true,
                 'is_navbar' => true,
-                'structure' => [],
+                'structure' => [
+                    "title" => ["champ" => "text", "label" => "Titre principal", "helper" => "Le titre affiché en haut de la page"],
+                ],
                 'content' => [],
             ],
         ];

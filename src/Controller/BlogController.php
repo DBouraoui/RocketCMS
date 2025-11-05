@@ -58,6 +58,7 @@ class BlogController extends AbstractController
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/blog/index.html.twig', [
             'blog_posts' => $blogPosts,
+            'content'=> $blogPage->getContent()
         ]);
     }
 

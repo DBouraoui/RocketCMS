@@ -6,7 +6,7 @@
     <div class="min-h-screen bg-white text-neutral-900 py-16 px-6">
         <div class="max-w-6xl mx-auto">
             <h1 class="text-4xl font-extrabold text-center mb-12 tracking-tight">
-                Ma Médiathèque
+                {{ content.title|default('Ma Médiathèque') }}
             </h1>
 
             {% if mediaLibrary is not empty %}

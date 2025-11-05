@@ -5,7 +5,7 @@
 {% block body %}
     <div class="min-h-screen bg-white text-neutral-900 p-6">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-3xl font-bold mb-8 text-center">Nos horaires d'ouverture</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">{{ content.title|default('Mes horraires d\'ouverture') }}</h1>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for hour in openingHours %}

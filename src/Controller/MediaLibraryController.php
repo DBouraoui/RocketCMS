@@ -21,9 +21,9 @@ final class MediaLibraryController extends AbstractController
     #[Route('/media-library', name: 'app_media_library_index', methods: ['GET'])]
     public function index(Security $security): Response
     {
-        $mediaLibrary = $this->menuLinkRepository->findOneBy(['slug'=>'ma-mediateque']);
+        $mediaLibraryMenu = $this->menuLinkRepository->findOneBy(['slug'=>'ma-mediateque']);
 
-        if (!$security->isGranted('view', $mediaLibrary)) {
+        if (!$security->isGranted('view', $mediaLibraryMenu)) {
             return $this->redirectToRoute('app_home_index');
         }
 
@@ -31,6 +31,7 @@ final class MediaLibraryController extends AbstractController
 
         return $this->render('Themes/'.$this->settingsService->getTheme().'/mediaLibrary/index.html.twig', [
             'mediaLibrary' => $mediaLibrary,
+            'content'=> $mediaLibraryMenu->getContent()
         ]);
     }
 }
